@@ -1,5 +1,9 @@
 # 03 RESTCONF / Python: 인터페이스 상태 대조
 
+## 뉴스에서 나온 질문
+
+[Nokia의 네트워크 자동화 발표(2026-09-17)](https://www.nokia.com/newsroom/nokia-accelerates-network-automation-through-agentic-unified-data-foundation-with-microsoft/)에서 신뢰할 수 있는 상태 데이터의 필요성을 읽고 **API 조회 결과를 CLI와 대조할 수 있는가?**를 기초 질문으로 정했다. RESTCONF는 내가 선택한 검증 방법이며 발표 속 Nokia·Microsoft 구현을 시험한 것은 아니다.
+
 ## 질문과 범위
 
 장비의 RESTCONF 운영 데이터가 SSH CLI의 현재 상태와 일치하는가? Cisco IOS XE의 `Cisco-IOS-XE-interfaces-oper:interfaces`를 GET으로 읽고 `show interfaces`의 관리 상태와 프로토콜 상태를 인터페이스 이름별로 대조한다. 공유 DevNet 장비에는 변경 요청을 보내지 않는다.

@@ -1,5 +1,9 @@
 # 08 AI DC Network: 공유 병목과 지연
 
+## 뉴스에서 나온 질문
+
+[Cisco의 AI 네트워크 글(2026-09-21)](https://blogs.cisco.com/news/the-ai-era-demands-more-than-speed-building-secure-intelligent-networks-from-silicon-to-optics)에서 AI 트래픽과 네트워크 지연의 문제를 확인했다. **제한된 공유 링크에서 TCP 처리량과 지연이 어떻게 바뀌는가?**를 내 첫 측정 질문으로 정했다. 기사 속 AI 워크로드·광 연결·상용 장비 성능은 시험하지 않았다.
+
 **상태: 로컬 검증.** 격리된 Linux 네트워크 네임스페이스의 가상 링크에서 TCP 처리량과 ping 지연을 측정했다. AI 학습 워크로드, GPU, RDMA/RoCE, ECN, PFC 또는 데이터센터 스위치의 동작을 검증한 것은 아니다.
 
 ## 질문과 가설

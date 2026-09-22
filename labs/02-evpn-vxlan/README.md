@@ -1,5 +1,9 @@
 # BGP EVPN / VXLAN L2VNI Lab
 
+## 뉴스에서 나온 질문
+
+[Cisco의 AI 네트워크 글(2026-09-21)](https://blogs.cisco.com/news/the-ai-era-demands-more-than-speed-building-secure-intelligent-networks-from-silicon-to-optics)에서 확장형 네트워크 요구를 읽고 **패브릭의 세그먼트 간 허용·격리를 확인할 수 있는가?**를 질문으로 정했다. EVPN/VXLAN은 내가 선택한 구현 방식이며 기사가 이 토폴로지를 검증한 것은 아니다.
+
 **상태:** 로컬 검증 완료 (2026-09-22, WSL2 FRR 컨테이너). 두 Leaf의 L2VNI 동작을 확인했으며, 2-Spine Underlay나 L3VNI는 이번 범위가 아닙니다.
 
 ## 문제와 가설

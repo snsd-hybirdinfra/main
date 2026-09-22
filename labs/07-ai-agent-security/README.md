@@ -1,5 +1,9 @@
 # 07 AI Agent Security: 도구 호출 경계
 
+## 뉴스에서 나온 질문
+
+[Google Cloud의 Agent 기반 인프라 보안 글(2026-09-18)](https://cloud.google.com/blog/topics/systems/using-ai-agents-to-secure-google-infrastructure/)에서 Agent의 인프라 접근과 통제 문제를 확인했다. **도구 호출의 권한·통신·비용 경계를 강제할 수 있는가?**를 내 질문으로 정했다. 결정적 로컬 게이트만 검증했고 원문의 Agent 시스템을 시험하지 않았다.
+
 **상태: 로컬 검증.** 실제 LLM Agent 서비스가 아닌 결정적 로컬 호출 하네스에서 게이트 정책을 실행했다. Agent가 게이트를 우회할 수 없게 하는 런타임 격리나 사람의 실제 승인 절차는 아직 검증하지 않았다.
 
 ## 질문

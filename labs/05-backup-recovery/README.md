@@ -1,5 +1,9 @@
 # 05 백업·복구: 합성 서비스의 RTO/RPO 측정
 
+## 뉴스에서 나온 질문
+
+[AWS의 DR 계획 글(2026-09-17)](https://aws.amazon.com/blogs/compute/planning-for-disaster-recovery-using-aws-local-zones-and-aws-outposts-racks/)에서 복구 목표와 훈련의 필요성을 읽고 **백업으로 되살리는 시간과 데이터 손실량을 직접 잴 수 있는가?**를 질문으로 정했다. 이 실습은 합성 서비스만 사용하며 AWS Local Zones·Outposts는 시험하지 않았다.
+
 **상태: 로컬 검증.** Python 표준 라이브러리로 만든 루프백 HTTP 서비스와 SQLite 임시 DB에 대해 스냅샷 복원 실험을 실행했다. 실제 운영 서비스의 복구 시간 보장이 아니다.
 
 ## 질문과 가설

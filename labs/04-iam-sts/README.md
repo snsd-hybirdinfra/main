@@ -1,5 +1,9 @@
 # 04 IAM / STS: 최소 권한 역할 위임
 
+## 뉴스에서 나온 질문
+
+[Google Threat Intelligence Group의 적대적 AI 분석(2026-09-08)](https://cloud.google.com/blog/topics/threat-intelligence/from-prompting-to-autonomy-the-evolution-of-adversarial-ai)에서 클라우드 자원과 자격증명 오용 위험을 확인했다. **최소 권한 역할과 단기 자격증명을 실제로 적용할 수 있는가?**를 내 질문으로 정했으며, 현재는 정책 설계만 했고 실제 공격이나 AWS 방어 효과를 검증하지 않았다.
+
 **상태: 설계.** 실행 가능한 AWS 실습 계정이 연결되어 있지 않아 정책 문서의 JSON 구문만 확인했다. 로컬 환경에 AWS CLI 설정 파일과 자격증명 파일도 없다. 역할 생성, `AssumeRole`, S3 허용·거부, 실제 만료는 수행하지 않았다.
 
 ## 질문

@@ -34,6 +34,12 @@
 
 - [AI Agent Security](../labs/07-ai-agent-security/README.md): 결정적 로컬 게이트에서 도구·경로·외부 통신·호출 비용·합성 승인 경계를 확인. 실제 LLM Agent·사람 승인은 미검증.
 - [AI DC Network](../labs/08-ai-dc-network/README.md): 격리된 가상 링크 20 Mbit/s 병목에서 단일 TCP 19.07 Mbit/s, 2개 흐름 합계 19.06 Mbit/s, 부하 중 ping 평균 69.16 ms를 측정. RoCE/ECN/PFC는 미검증.
+## 2026-09-22 — 뉴스에서 기술을 검증하는 구조로 정리
+
+- ChatGPT 웹의 「IT·보안 데일리 브리핑」과 기사 원문을 대조해 [뉴스 → 기술 실습 기록](news-to-labs.md)을 만들었다.
+- 8개 실습에 **원문 → 내 질문 → 실제 증적 → 미검증 범위**를 연결했다. 기사에 없는 구현은 내 실험 설계로 표시했다.
+- 기존 검증 상태는 유지했다: 6개 로컬 검증, RESTCONF/Python·IAM/STS 2개 설계.
+
 ## 이후 갱신 양식
 
 ### YYYY-MM-DD

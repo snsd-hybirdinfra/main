@@ -1,5 +1,9 @@
 # 06 AAA / RADIUS: 승인·거부 정책 확인
 
+## 뉴스에서 나온 질문
+
+[Cisco ISE RADIUS 서비스 거부 권고(2026-09-16)](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-RADIUS-dos-wR3hYPMw)를 보고 인증 기반 서비스의 중요성을 확인했다. **RADIUS의 기본 인증·거부 판정이 정확히 작동하는가?**부터 실습했다. 권고의 취약점·서비스 거부를 재현하거나 Cisco ISE를 시험하지는 않았다.
+
 **상태: 로컬 검증.** FreeRADIUS 3.2.10 공식 컨테이너와 `radtest`를 같은 네트워크 네임스페이스의 루프백에서 실행했다. 실제 스위치·VPN·관리망 로그인은 검증하지 않았다.
 
 ## 질문과 가설

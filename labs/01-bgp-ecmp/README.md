@@ -1,5 +1,9 @@
 # BGP ECMP Spine-Leaf Lab
 
+## 뉴스에서 나온 질문
+
+[Cisco의 AI 네트워크 글(2026-09-21)](https://blogs.cisco.com/news/the-ai-era-demands-more-than-speed-building-secure-intelligent-networks-from-silicon-to-optics)에서 트래픽과 네트워크 복원력의 문제를 확인했다. 여기서 **경로 하나가 사라져도 통신이 유지되는가?**를 내 실험 질문으로 정했다. FRR BGP/ECMP 토폴로지는 내 구현이며 기사 속 상용 AI 네트워크를 시험한 것은 아니다.
+
 **상태:** 로컬 검증 완료 (2026-09-22, WSL2 Ubuntu의 FRR 컨테이너). 실제 EVE-NG 또는 물리 데이터센터 검증은 수행하지 않았습니다.
 
 ## 문제와 목표
