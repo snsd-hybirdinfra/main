@@ -1,0 +1,15 @@
+{
+  "status": "pass",
+  "topology": "two isolated network namespaces, one veth pair",
+  "tbf_limit_mbps": 20,
+  "unshaped_single_mbps": 40206.87,
+  "shaped_single_mbps": 19.07,
+  "shaped_two_flow_total_mbps": 19.06,
+  "two_flow_receiver_mbps": [
+    13.51,
+    5.54
+  ],
+  "idle_ping_avg_ms": 0.035,
+  "loaded_ping_avg_ms": 69.16,
+  "tbf_dropped_packets": 5
+}

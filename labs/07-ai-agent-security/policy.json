@@ -1,0 +1,15 @@
+{
+  "allowed_tools": ["read_artifact", "http_get", "write_report"],
+  "max_cost_units": 4,
+  "cost_units": {
+    "read_artifact": 1,
+    "http_get": 1,
+    "write_report": 2
+  },
+  "allowed_http": {
+    "scheme": "http",
+    "host": "127.0.0.1",
+    "path": "/facts"
+  },
+  "approval_required": ["write_report"]
+}

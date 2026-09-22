@@ -30,6 +30,10 @@
 
 - [FreeRADIUS 로컬 실습](../labs/06-aaa-radius/README.md)에서 등록 계정 인증 1건, 틀린 비밀번호와 미등록 계정 거부 2건을 확인.
 - 실제 네트워크 장비의 관리망 접근은 포함하지 않았다.
+## 2026-09-22 — Agent 경계와 가상 링크 혼잡 실습
+
+- [AI Agent Security](../labs/07-ai-agent-security/README.md): 결정적 로컬 게이트에서 도구·경로·외부 통신·호출 비용·합성 승인 경계를 확인. 실제 LLM Agent·사람 승인은 미검증.
+- [AI DC Network](../labs/08-ai-dc-network/README.md): 격리된 가상 링크 20 Mbit/s 병목에서 단일 TCP 19.07 Mbit/s, 2개 흐름 합계 19.06 Mbit/s, 부하 중 ping 평균 69.16 ms를 측정. RoCE/ECN/PFC는 미검증.
 ## 이후 갱신 양식
 
 ### YYYY-MM-DD

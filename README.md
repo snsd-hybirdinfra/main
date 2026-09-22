@@ -2,7 +2,7 @@
 
 네트워크를 기반으로 데이터센터, 클라우드, 보안, AI 인프라까지 확장하는 학습·검증 기록입니다. 「IT·보안 데일리 브리핑」에서 반복되는 기술 흐름을 주제로 고르고, 직접 구성한 실습과 검증 결과를 연결합니다.
 
-> 상태: BGP/ECMP와 EVPN/VXLAN 실습을 FRR 컨테이너에서 로컬 검증했습니다. 백업·복구와 AAA/RADIUS는 합성 환경에서 로컬 검증했습니다. RESTCONF/Python과 IAM/STS는 설계 상태입니다.
+> 상태: BGP/ECMP와 EVPN/VXLAN 실습을 FRR 컨테이너에서 로컬 검증했습니다. 백업·복구, AAA/RADIUS, AI Agent Security, AI DC Network는 범위를 제한한 합성 환경에서 로컬 검증했습니다. RESTCONF/Python과 IAM/STS는 설계 상태입니다.
 
 ## 읽는 순서
 
@@ -26,6 +26,8 @@ Routing & Switching → BGP/ECMP → Spine-Leaf → EVPN/VXLAN
 - [EVPN/VXLAN: VNI 100·200 통신과 VNI 간 격리](labs/02-evpn-vxlan/README.md)
 - [백업·복구: 합성 서비스 RTO 1.627초, 손실 2건](labs/05-backup-recovery/README.md)
 - [AAA/RADIUS: 승인 1건, 거부 2건](labs/06-aaa-radius/README.md)
+- [AI Agent Security: 도구·통신·예산·합성 승인 경계](labs/07-ai-agent-security/README.md)
+- [AI DC Network: 20 Mbit/s 가상 병목의 처리량·지연](labs/08-ai-dc-network/README.md)
 
 ## 설계 중인 실습
 

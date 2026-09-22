@@ -4,6 +4,7 @@ Target 1: sandbox-iosxe-latest-1.cisco.com:443
 - HTTPS /restconf/data/ unauthenticated: HTTP 401
 - SSH TCP/22: reachable
 - RESTCONF GET Cisco-IOS-XE-interfaces-oper:interfaces with published public demo account: HTTP 401
+- A second publicly documented username on target 1 also returned HTTP 401; no credential value is stored here.
 - compare.py result: "RESTCONF HTTP 401; comparison not run.", exit code 2 inside WSL (PowerShell wrapper exit reporting is not authoritative)
 
 Target 2: sandbox-iosxe-recomm-1.cisco.com:443
