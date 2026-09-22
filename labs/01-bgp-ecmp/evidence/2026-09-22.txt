@@ -15,9 +15,9 @@ Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down Sta
 
 Total number of neighbors 2
 === Normal: ECMP route ===
-10.201.102.0/29 nhid 14 proto bgp metric 20 
-	nexthop via 10.201.11.2 dev s1 weight 1 
-	nexthop via 10.201.21.2 dev s2 weight 1 
+10.201.102.0/29 nhid 14 proto bgp metric 20
+	nexthop via 10.201.11.2 dev s1 weight 1
+	nexthop via 10.201.21.2 dev s2 weight 1
 === Normal: Host1 -> Host2 ===
 PING 10.201.102.3 (10.201.102.3): 56 data bytes
 64 bytes from 10.201.102.3: seq=0 ttl=61 time=0.221 ms
@@ -35,7 +35,7 @@ traceroute to 10.201.102.3 (10.201.102.3), 5 hops max, 46 byte packets
 === Failure: stop Spine1 ===
  Container infra-bgp-ecmp-lab-spine1-1  Stopping
  Container infra-bgp-ecmp-lab-spine1-1  Stopped
-10.201.102.0/29 nhid 16 via 10.201.21.2 dev s2 proto bgp metric 20 
+10.201.102.0/29 nhid 16 via 10.201.21.2 dev s2 proto bgp metric 20
 PING 10.201.102.3 (10.201.102.3): 56 data bytes
 64 bytes from 10.201.102.3: seq=0 ttl=61 time=0.050 ms
 64 bytes from 10.201.102.3: seq=1 ttl=61 time=0.064 ms
@@ -47,9 +47,9 @@ round-trip min/avg/max = 0.050/0.064/0.079 ms
 === Recovery: restart Spine1 and restore its two links ===
  Container infra-bgp-ecmp-lab-spine1-1  Starting
  Container infra-bgp-ecmp-lab-spine1-1  Started
-10.201.102.0/29 nhid 27 proto bgp metric 20 
-	nexthop via 10.201.21.2 dev s2 weight 1 
-	nexthop via 10.201.11.2 dev s1 weight 1 
+10.201.102.0/29 nhid 27 proto bgp metric 20
+	nexthop via 10.201.21.2 dev s2 weight 1
+	nexthop via 10.201.11.2 dev s1 weight 1
 PING 10.201.102.3 (10.201.102.3): 56 data bytes
 64 bytes from 10.201.102.3: seq=0 ttl=61 time=0.051 ms
 64 bytes from 10.201.102.3: seq=1 ttl=61 time=0.072 ms
