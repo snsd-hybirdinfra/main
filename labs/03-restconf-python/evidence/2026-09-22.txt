@@ -1,0 +1,13 @@
+# 2026-09-22 RESTCONF access attempt
+
+Target 1: sandbox-iosxe-latest-1.cisco.com:443
+- HTTPS /restconf/data/ unauthenticated: HTTP 401
+- SSH TCP/22: reachable
+- RESTCONF GET Cisco-IOS-XE-interfaces-oper:interfaces with published public demo account: HTTP 401
+- compare.py result: "RESTCONF HTTP 401; comparison not run.", exit code 2 inside WSL (PowerShell wrapper exit reporting is not authoritative)
+
+Target 2: sandbox-iosxe-recomm-1.cisco.com:443
+- RESTCONF GET same resource with published public demo account: HTTP 401
+
+No device interface JSON or CLI state was collected. No configuration was changed.
+Certificate hostname verification failed on target 1 (self-signed IOS certificate); the RESTCONF attempts above used a per-sandbox TLS exception, not a global setting. Credentials and raw error bodies are omitted.

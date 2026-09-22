@@ -2,7 +2,7 @@
 
 네트워크를 기반으로 데이터센터, 클라우드, 보안, AI 인프라까지 확장하는 학습·검증 기록입니다. 「IT·보안 데일리 브리핑」에서 반복되는 기술 흐름을 주제로 고르고, 직접 구성한 실습과 검증 결과를 연결합니다.
 
-> 상태: BGP/ECMP와 EVPN/VXLAN 실습을 FRR 컨테이너에서 로컬 검증했습니다. 나머지 로드맵 항목은 계획입니다.
+> 상태: BGP/ECMP와 EVPN/VXLAN 실습을 FRR 컨테이너에서 로컬 검증했습니다. RESTCONF/Python은 공개 샌드박스 인증 실패로 설계 상태이며, 나머지 로드맵 항목은 계획입니다.
 
 ## 읽는 순서
 
@@ -24,6 +24,10 @@ Routing & Switching → BGP/ECMP → Spine-Leaf → EVPN/VXLAN
 
 - [BGP/ECMP Spine-Leaf: 정상 경로 2개, Spine 장애 시 통신 유지, 복구 후 경로 재형성](labs/01-bgp-ecmp/README.md)
 - [EVPN/VXLAN: VNI 100·200 통신과 VNI 간 격리](labs/02-evpn-vxlan/README.md)
+
+## 설계 중인 실습
+
+- [RESTCONF/Python: 공개 IOS XE 샌드박스 HTTP 401, 실제 CLI 대조 대기](labs/03-restconf-python/README.md)
 
 ## 운영 원칙
 
