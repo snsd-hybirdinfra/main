@@ -2,7 +2,7 @@
 
 네트워크를 기반으로 데이터센터, 클라우드, 보안, AI 인프라까지 확장하는 학습·검증 기록입니다. 「IT·보안 데일리 브리핑」에서 반복되는 기술 흐름을 주제로 고르고, 직접 구성한 실습과 검증 결과를 연결합니다.
 
-> 상태: BGP/ECMP와 EVPN/VXLAN 실습을 FRR 컨테이너에서 로컬 검증했습니다. 백업·복구는 합성 서비스에서 로컬 검증했습니다. RESTCONF/Python과 IAM/STS는 설계 상태입니다.
+> 상태: BGP/ECMP와 EVPN/VXLAN 실습을 FRR 컨테이너에서 로컬 검증했습니다. 백업·복구와 AAA/RADIUS는 합성 환경에서 로컬 검증했습니다. RESTCONF/Python과 IAM/STS는 설계 상태입니다.
 
 ## 읽는 순서
 
@@ -25,6 +25,7 @@ Routing & Switching → BGP/ECMP → Spine-Leaf → EVPN/VXLAN
 - [BGP/ECMP Spine-Leaf: 정상 경로 2개, Spine 장애 시 통신 유지, 복구 후 경로 재형성](labs/01-bgp-ecmp/README.md)
 - [EVPN/VXLAN: VNI 100·200 통신과 VNI 간 격리](labs/02-evpn-vxlan/README.md)
 - [백업·복구: 합성 서비스 RTO 1.627초, 손실 2건](labs/05-backup-recovery/README.md)
+- [AAA/RADIUS: 승인 1건, 거부 2건](labs/06-aaa-radius/README.md)
 
 ## 설계 중인 실습
 

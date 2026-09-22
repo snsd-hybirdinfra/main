@@ -1,0 +1,8 @@
+2026-09-22 / FreeRADIUS 3.2.10-alpine
+image digest: sha256:91acbee4a1f532e3a266ae3d7f153a5cf21f5faa9bc14116d5d1fe2c2a746c27
+approved_user: Access-Accept
+wrong_password: Access-Reject
+unknown_user: Access-Reject
+server_network: none (loopback only)
+test_secret_and_password: generated at runtime; omitted
+No network device or production management path was tested.

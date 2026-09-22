@@ -26,6 +26,10 @@
 
 - [IAM/STS 예시 정책](../labs/04-iam-sts/README.md) 4개의 JSON 구문 확인. AWS 계정에서 위임·허용·거부·만료를 실행하지 않아 설계로 표시.
 - [백업·복구](../labs/05-backup-recovery/README.md): 합성 HTTP/SQLite 서비스에서 5건 중 3건 복원, 2건 손실, RTO 1.627초 측정. 없는 백업 복원은 실패했고 유효한 스냅샷으로 재시도했다.
+## 2026-09-22 — AAA/RADIUS 인증 판정
+
+- [FreeRADIUS 로컬 실습](../labs/06-aaa-radius/README.md)에서 등록 계정 인증 1건, 틀린 비밀번호와 미등록 계정 거부 2건을 확인.
+- 실제 네트워크 장비의 관리망 접근은 포함하지 않았다.
 ## 이후 갱신 양식
 
 ### YYYY-MM-DD
