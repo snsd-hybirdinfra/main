@@ -1,0 +1,13 @@
+{
+  "status": "pass",
+  "at_utc": "2026-09-22T02:16:51.412665+00:00",
+  "baseline_events": 3,
+  "events_before_failure": 5,
+  "events_after_restore": 3,
+  "lost_events": 2,
+  "backup_to_failure_seconds": 0.055,
+  "rto_seconds": 1.627,
+  "outage_observed": true,
+  "missing_backup_rejected": true,
+  "storage": "temporary local SQLite; deleted after run"
+}

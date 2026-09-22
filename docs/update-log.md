@@ -22,6 +22,10 @@
 
 - Cisco DevNet 공개 IOS XE 장비 두 곳에서 RESTCONF 인터페이스 GET을 시도했으나 공개 예시 계정이 HTTP 401을 반환.
 - [읽기 전용 대조 코드](../labs/03-restconf-python/README.md)와 거부 증적을 추가. API·CLI 일치는 검증하지 않았으므로 상태는 설계.
+## 2026-09-22 — IAM/STS 설계와 백업·복구 실습
+
+- [IAM/STS 예시 정책](../labs/04-iam-sts/README.md) 4개의 JSON 구문 확인. AWS 계정에서 위임·허용·거부·만료를 실행하지 않아 설계로 표시.
+- [백업·복구](../labs/05-backup-recovery/README.md): 합성 HTTP/SQLite 서비스에서 5건 중 3건 복원, 2건 손실, RTO 1.627초 측정. 없는 백업 복원은 실패했고 유효한 스냅샷으로 재시도했다.
 ## 이후 갱신 양식
 
 ### YYYY-MM-DD

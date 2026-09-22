@@ -1,0 +1,13 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "OnlyNamedLabCaller",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::111122223333:role/lab-caller"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
