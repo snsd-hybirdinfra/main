@@ -1,0 +1,150 @@
+{
+  "tested_at": "2026-09-24T01:07:30.6928883Z",
+  "environment": "Docker Desktop; nginx:alpine; loopback 127.0.0.1:18080",
+  "question": "Does the service remain reachable when one backend stops, and does the backend rejoin after recovery?",
+  "normal": {
+    "samples": [
+      {
+        "backend": "web02",
+        "elapsed_ms": 8.97
+      },
+      {
+        "backend": "web01",
+        "elapsed_ms": 3.68
+      },
+      {
+        "backend": "web02",
+        "elapsed_ms": 3.58
+      },
+      {
+        "backend": "web01",
+        "elapsed_ms": 3.63
+      },
+      {
+        "backend": "web02",
+        "elapsed_ms": 3.02
+      },
+      {
+        "backend": "web01",
+        "elapsed_ms": 3.52
+      },
+      {
+        "backend": "web02",
+        "elapsed_ms": 2.95
+      },
+      {
+        "backend": "web01",
+        "elapsed_ms": 3.49
+      }
+    ],
+    "counts": [
+      {
+        "backend": "web01",
+        "requests": 4
+      },
+      {
+        "backend": "web02",
+        "requests": 4
+      }
+    ]
+  },
+  "web01_stopped": {
+    "samples": [
+      {
+        "backend": "web02",
+        "elapsed_ms": 2.89
+      },
+      {
+        "backend": "web02",
+        "elapsed_ms": 1005.15
+      },
+      {
+        "backend": "web02",
+        "elapsed_ms": 3.64
+      },
+      {
+        "backend": "web02",
+        "elapsed_ms": 3.38
+      },
+      {
+        "backend": "web02",
+        "elapsed_ms": 3.06
+      },
+      {
+        "backend": "web02",
+        "elapsed_ms": 3.67
+      },
+      {
+        "backend": "web02",
+        "elapsed_ms": 2.84
+      },
+      {
+        "backend": "web02",
+        "elapsed_ms": 3.31
+      }
+    ],
+    "counts": [
+      {
+        "backend": "web02",
+        "requests": 8
+      }
+    ]
+  },
+  "web01_restarted": {
+    "samples": [
+      {
+        "backend": "web02",
+        "elapsed_ms": 2.81
+      },
+      {
+        "backend": "web01",
+        "elapsed_ms": 3.35
+      },
+      {
+        "backend": "web02",
+        "elapsed_ms": 3.47
+      },
+      {
+        "backend": "web01",
+        "elapsed_ms": 3.43
+      },
+      {
+        "backend": "web02",
+        "elapsed_ms": 3.5
+      },
+      {
+        "backend": "web01",
+        "elapsed_ms": 3.46
+      },
+      {
+        "backend": "web02",
+        "elapsed_ms": 3.51
+      },
+      {
+        "backend": "web01",
+        "elapsed_ms": 3.46
+      }
+    ],
+    "counts": [
+      {
+        "backend": "web01",
+        "requests": 4
+      },
+      {
+        "backend": "web02",
+        "requests": 4
+      }
+    ]
+  },
+  "assertions": {
+    "both_backends_seen_before_failure": true,
+    "only_web02_seen_during_web01_failure": true,
+    "both_backends_seen_after_recovery": true
+  },
+  "passed": true,
+  "limits": [
+    "Synthetic HTTP responses only",
+    "Nginx passive retry, not an F5 BIG-IP health monitor",
+    "No TLS, session persistence, WAF, OAuth, exploit, or performance test"
+  ]
+}

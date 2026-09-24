@@ -1,6 +1,6 @@
 # 뉴스에서 시작한 기술 실습
 
-2026-09-22에 ChatGPT 웹의 「IT·보안 데일리 브리핑」과 기사 원문을 대조했다. 이 저장소는 뉴스 스크랩이 아니라 **기사의 문제 → 내가 세운 기술 질문 → 직접 실행한 실습 → 증적과 한계**를 기록한다. 기사에 없는 구현 기술은 내 실험 설계로 구분한다.
+2026-09-24까지 ChatGPT 웹의 「IT·보안 데일리 브리핑」과 기사 원문을 대조했다. 이 저장소는 뉴스 스크랩이 아니라 **기사의 문제 → 내가 세운 기술 질문 → 직접 실행한 실습 → 증적과 한계**를 기록한다. 기사에 없는 구현 기술은 내 실험 설계로 구분한다.
 
 | 원문과 발행일 | 내가 세운 질문 | 실습과 관측 | 검증하지 않은 것 |
 |---|---|---|---|
@@ -12,6 +12,7 @@
 | [Cisco ISE RADIUS 권고](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-RADIUS-dos-wR3hYPMw), 2026-09-16 | RADIUS의 기본 인증·거부가 정확히 작동하는가? | [06 AAA/RADIUS](../labs/06-aaa-radius/README.md): Accept 1·Reject 2 [증적](../labs/06-aaa-radius/evidence/2026-09-22.txt) | 권고의 취약점·서비스 거부·ISE |
 | [Google Agent 보안 글](https://cloud.google.com/blog/topics/systems/using-ai-agents-to-secure-google-infrastructure/), 2026-09-18 | 도구 호출의 권한·통신·비용 경계를 강제할 수 있는가? | [07 AI Agent Security](../labs/07-ai-agent-security/README.md): 결정적 게이트의 허용·거부 [증적](../labs/07-ai-agent-security/evidence/2026-09-22.json) | 실제 LLM Agent·사람 승인 |
 | Cisco AI 네트워크 글 | 공유 병목에서 처리량과 지연이 어떻게 바뀌는가? | [08 AI DC Network](../labs/08-ai-dc-network/README.md): 20 Mbit/s 가상 링크의 TCP 약 19 Mbit/s·부하 중 ping 69.16 ms [증적](../labs/08-ai-dc-network/evidence/2026-09-22.json) | GPU/RDMA/RoCE·ECN/PFC·광 연결 |
+| [F5 CVE-2026-94127 권고](https://my.f5.com/manage/s/article/K000162605)와 [CISA KEV 공지](https://www.cisa.gov/news-events/alerts/2026/09/22/cisa-adds-four-known-exploited-vulnerabilities-catalog), 2026-09-22 | 백엔드 하나가 중단돼도 서비스가 유지되고 복구 후 다시 분산되는가? | [09 Load Balancer HA](../labs/09-load-balancer-ha/README.md): 정상 4:4, web01 중단 중 web02 8/8, 복구 후 4:4 [증적](../labs/09-load-balancer-ha/evidence/2026-09-24.json) | F5 제품·APM·OAuth·취약점 재현, TLS·WAF·성능 |
 
 이 표의 질문과 구현 방식은 원문을 읽고 **내가 도출한 것**이다. 각 기사에서 위 토폴로지나 측정값을 제시했다는 뜻은 아니다. 원문의 발행일을 사용했고 별도 사건일이 확인되지 않은 발표에 사건일을 임의로 붙이지 않았다.
 

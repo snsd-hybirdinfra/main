@@ -2,7 +2,7 @@
 
 「IT·보안 데일리 브리핑」의 뉴스를 읽고 **기술 문제를 뽑아 직접 시험한** 네트워크·클라우드·보안·AI 인프라 포트폴리오입니다. 각 기록은 **원문 → 내가 세운 질문 → 실습 → 관측 증적 → 검증 한계**로 이어집니다.
 
-> 상태: BGP/ECMP와 EVPN/VXLAN 실습을 FRR 컨테이너에서 로컬 검증했습니다. 백업·복구, AAA/RADIUS, AI Agent Security, AI DC Network는 범위를 제한한 합성 환경에서 로컬 검증했습니다. RESTCONF/Python과 IAM/STS는 설계 상태입니다.
+> 상태: BGP/ECMP와 EVPN/VXLAN 실습을 FRR 컨테이너에서 로컬 검증했습니다. 백업·복구, AAA/RADIUS, AI Agent Security, AI DC Network, Load Balancer HA는 범위를 제한한 합성 환경에서 로컬 검증했습니다. RESTCONF/Python과 IAM/STS는 설계 상태입니다.
 
 ## 읽는 순서
 
@@ -21,7 +21,7 @@
 | [AWS의 DR 계획 글](https://aws.amazon.com/blogs/compute/planning-for-disaster-recovery-using-aws-local-zones-and-aws-outposts-racks/) | 백업으로 합성 서비스를 얼마나 빨리 되살리는가? | [복구 실습](labs/05-backup-recovery/README.md)에서 RTO 1.627초·손실 2건 |
 | [Google Cloud의 Agent 보안 글](https://cloud.google.com/blog/topics/systems/using-ai-agents-to-secure-google-infrastructure/) | 도구 사용과 외부 통신을 정책으로 거부할 수 있는가? | [로컬 하네스](labs/07-ai-agent-security/README.md)의 허용·거부 확인 |
 
-위 기술 질문은 원문에서 **내가 도출한 실험 설계**입니다. 기사 속 제품이나 실제 AI 워크로드를 시험했다는 뜻은 아닙니다. 8개 실습의 연결은 [뉴스 → 기술 실습 기록](docs/news-to-labs.md)에 있습니다.
+위 기술 질문은 원문에서 **내가 도출한 실험 설계**입니다. 기사 속 제품이나 실제 AI 워크로드를 시험했다는 뜻은 아닙니다. 9개 실습의 연결은 [뉴스 → 기술 실습 기록](docs/news-to-labs.md)에 있습니다.
 
 ## 학습 흐름
 
@@ -39,6 +39,7 @@ Routing & Switching → BGP/ECMP → Spine-Leaf → EVPN/VXLAN
 - [AAA/RADIUS: 승인 1건, 거부 2건](labs/06-aaa-radius/README.md)
 - [AI Agent Security: 도구·통신·예산·합성 승인 경계](labs/07-ai-agent-security/README.md)
 - [AI DC Network: 20 Mbit/s 가상 병목의 처리량·지연](labs/08-ai-dc-network/README.md)
+- [Load Balancer HA: 정상 4:4 분산, web01 장애 중 web02 응답 8/8, 복구 후 4:4](labs/09-load-balancer-ha/README.md)
 
 ## 설계 중인 실습
 

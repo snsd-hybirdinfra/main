@@ -40,6 +40,12 @@
 - 8개 실습에 **원문 → 내 질문 → 실제 증적 → 미검증 범위**를 연결했다. 기사에 없는 구현은 내 실험 설계로 표시했다.
 - 기존 검증 상태는 유지했다: 6개 로컬 검증, RESTCONF/Python·IAM/STS 2개 설계.
 
+## 2026-09-24 — F5 권고에서 Load Balancer HA 실습으로
+
+- 9월 23일 브리핑의 F5 BIG-IP APM 이슈를 F5 권고와 CISA KEV 공지로 확인했다.
+- 보안 권고에서 가용성 질문을 도출해 [Nginx Load Balancer HA 실습](../labs/09-load-balancer-ha/README.md)을 추가했다.
+- 정상 4:4 분산, `web01` 중단 중 `web02` 응답 8/8, 복구 후 4:4 재분산을 확인했다. F5 제품·OAuth·취약점은 재현하지 않았다.
+
 ## 이후 갱신 양식
 
 ### YYYY-MM-DD
