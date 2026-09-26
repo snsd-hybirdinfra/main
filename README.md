@@ -2,7 +2,7 @@
 
 「IT·보안 데일리 브리핑」의 뉴스를 읽고 **기술 문제를 뽑아 직접 시험한** 네트워크·클라우드·보안·AI 인프라 포트폴리오입니다. 각 기록은 **원문 → 내가 세운 질문 → 실습 → 관측 증적 → 검증 한계**로 이어집니다.
 
-> 상태: BGP/ECMP와 EVPN/VXLAN 실습을 FRR 컨테이너에서 로컬 검증했습니다. 백업·복구, AAA/RADIUS, AI Agent Security, AI DC Network, Load Balancer HA는 범위를 제한한 합성 환경에서 로컬 검증했습니다. RESTCONF/Python과 IAM/STS는 설계 상태입니다.
+> 상태: BGP/ECMP와 EVPN/VXLAN 실습을 FRR 컨테이너에서 로컬 검증했습니다. 백업·복구, AAA/RADIUS, AI Agent Security, AI DC Network, Load Balancer HA, Network Digital Twin은 범위를 제한한 합성 환경에서 로컬 검증했습니다. RESTCONF/Python과 IAM/STS는 설계 상태입니다.
 
 ## 읽는 순서
 
@@ -20,8 +20,9 @@
 | [Cisco의 AI 네트워크 글](https://blogs.cisco.com/news/the-ai-era-demands-more-than-speed-building-secure-intelligent-networks-from-silicon-to-optics) | Spine 장애에도 BGP/ECMP 경로와 통신이 유지되는가? | [FRR 실습](labs/01-bgp-ecmp/README.md)에서 대체 경로 1개·ping 3/3 |
 | [AWS의 DR 계획 글](https://aws.amazon.com/blogs/compute/planning-for-disaster-recovery-using-aws-local-zones-and-aws-outposts-racks/) | 백업으로 합성 서비스를 얼마나 빨리 되살리는가? | [복구 실습](labs/05-backup-recovery/README.md)에서 RTO 1.627초·손실 2건 |
 | [Google Cloud의 Agent 보안 글](https://cloud.google.com/blog/topics/systems/using-ai-agents-to-secure-google-infrastructure/) | 도구 사용과 외부 통신을 정책으로 거부할 수 있는가? | [로컬 하네스](labs/07-ai-agent-security/README.md)의 허용·거부 확인 |
+| [IP Fabric의 애플리케이션 인프라 매핑 글](https://ipfabric.io/blog/application-to-infrastructure-mapping/) | 읽기 전용 모델로 경로·장애 내성·세그멘테이션 의도를 판정할 수 있는가? | [Network Digital Twin](labs/10-network-digital-twin/README.md)에서 정상 경로 2개·단일 장애 경로 1개·거부 정책 확인 |
 
-위 기술 질문은 원문에서 **내가 도출한 실험 설계**입니다. 기사 속 제품이나 실제 AI 워크로드를 시험했다는 뜻은 아닙니다. 9개 실습의 연결은 [뉴스 → 기술 실습 기록](docs/news-to-labs.md)에 있습니다.
+위 기술 질문은 원문에서 **내가 도출한 실험 설계**입니다. 기사 속 제품이나 실제 AI 워크로드를 시험했다는 뜻은 아닙니다. 10개 실습의 연결은 [뉴스 → 기술 실습 기록](docs/news-to-labs.md)에 있습니다.
 
 ## 학습 흐름
 
@@ -40,6 +41,7 @@ Routing & Switching → BGP/ECMP → Spine-Leaf → EVPN/VXLAN
 - [AI Agent Security: 도구·통신·예산·합성 승인 경계](labs/07-ai-agent-security/README.md)
 - [AI DC Network: 20 Mbit/s 가상 병목의 처리량·지연](labs/08-ai-dc-network/README.md)
 - [Load Balancer HA: 정상 4:4 분산, web01 장애 중 web02 응답 8/8, 복구 후 4:4](labs/09-load-balancer-ha/README.md)
+- [Network Digital Twin: 정상 경로 2개, Spine 1대 장애 경로 1개, 세그멘테이션 거부](labs/10-network-digital-twin/README.md)
 
 ## 설계 중인 실습
 

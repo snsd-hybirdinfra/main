@@ -1,0 +1,50 @@
+{
+  "model": "synthetic-app-network-v1",
+  "nodes": [
+    { "id": "client", "role": "workload", "application": "portal" },
+    { "id": "guest", "role": "workload", "application": "guest" },
+    { "id": "leaf1", "role": "switch" },
+    { "id": "spine1", "role": "router" },
+    { "id": "spine2", "role": "router" },
+    { "id": "leaf2", "role": "switch" },
+    { "id": "app", "role": "workload", "application": "portal" },
+    { "id": "admin", "role": "workload", "application": "management" }
+  ],
+  "links": [
+    ["client", "leaf1"],
+    ["guest", "leaf1"],
+    ["leaf1", "spine1"],
+    ["leaf1", "spine2"],
+    ["spine1", "leaf2"],
+    ["spine2", "leaf2"],
+    ["leaf2", "app"],
+    ["leaf2", "admin"]
+  ],
+  "denied_flows": [
+    { "source": "guest", "destination": "admin", "reason": "guest-to-management segmentation" }
+  ],
+  "scenarios": [
+    {
+      "name": "normal",
+      "disabled_nodes": [],
+      "checks": [
+        { "source": "client", "destination": "app", "expected_reachable": true, "min_paths": 2 },
+        { "source": "guest", "destination": "admin", "expected_reachable": false }
+      ]
+    },
+    {
+      "name": "spine1-down",
+      "disabled_nodes": ["spine1"],
+      "checks": [
+        { "source": "client", "destination": "app", "expected_reachable": true, "min_paths": 1 }
+      ]
+    },
+    {
+      "name": "both-spines-down",
+      "disabled_nodes": ["spine1", "spine2"],
+      "checks": [
+        { "source": "client", "destination": "app", "expected_reachable": false }
+      ]
+    }
+  ]
+}

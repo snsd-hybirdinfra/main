@@ -46,6 +46,13 @@
 - 보안 권고에서 가용성 질문을 도출해 [Nginx Load Balancer HA 실습](../labs/09-load-balancer-ha/README.md)을 추가했다.
 - 정상 4:4 분산, `web01` 중단 중 `web02` 응답 8/8, 복구 후 4:4 재분산을 확인했다. F5 제품·OAuth·취약점은 재현하지 않았다.
 
+## 2026-09-26 — 애플리케이션 경로를 Network Digital Twin으로 검증
+
+- 9월 24일 브리핑의 Network Digital Twin 흐름을 IP Fabric의 2026-09-23 애플리케이션 인프라 매핑 글과 8.1 릴리스 노트로 확인했다.
+- [Network Digital Twin 실습](../labs/10-network-digital-twin/README.md)을 추가해 합성 애플리케이션 경로와 세그멘테이션 의도를 읽기 전용으로 계산했다.
+- 정상 상태 2개 경로, spine1 중단 후 1개 경로, 두 Spine 중단 후 0개 경로, `guest → admin` 정책 거부를 확인했다.
+- IP Fabric 제품, 실제 장비/API, 자동 수집, 라우팅 수렴, ACL/NAT·포트 판정은 검증하지 않았다.
+
 ## 이후 갱신 양식
 
 ### YYYY-MM-DD
