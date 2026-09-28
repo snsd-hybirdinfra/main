@@ -1,28 +1,27 @@
-# 04 IAM / STS: Workload Identity 최소 권한
+# 04 IAM / STS: 탈취된 역할의 행동 범위 줄이기
 
-## 문제와 출처
+## 왜 이 실습을 했나
 
-[Google Threat Intelligence Group의 적대적 AI 분석](https://cloud.google.com/blog/topics/threat-intelligence/from-prompting-to-autonomy-the-evolution-of-adversarial-ai)(2026-09-08)은 클라우드 자격증명 오용 위험을 다뤘다. [Microsoft Security Research의 Storm-3168 분석](https://www.microsoft.com/en-us/security/blog/2026/09/25/storm-3168-agentic-driven-cloud-attacks-using-compromised-service-principals/)(2026-09-25)은 탈취된 Azure Service Principal이 대량 자원 삭제와 자격증명 수집에 사용됐고, 일부 삭제는 Resource Lock과 삭제 보호가 차단했다고 보고했다.
+[Google Threat Intelligence Group의 적대적 AI 분석](https://cloud.google.com/blog/topics/threat-intelligence/from-prompting-to-autonomy-the-evolution-of-adversarial-ai)(2026-09-08)을 읽으면서 클라우드 자격증명이 탈취됐을 때 피해 범위를 어디까지 줄일 수 있는지가 궁금했다. 이어서 [Microsoft의 Storm-3168 분석](https://www.microsoft.com/en-us/security/blog/2026/09/25/storm-3168-agentic-driven-cloud-attacks-using-compromised-service-principals/)(2026-09-25)을 확인했다. 공격자는 탈취한 Azure Service Principal로 자원을 대량 삭제하고 다른 자격증명도 수집했다. 일부 Storage 삭제는 Resource Lock과 삭제 보호에 막혔다.
 
-여기서 **“신뢰 관계, 역할 권한, 세션 경계, 명시적 거부를 함께 적용하면 탈취된 Workload Identity의 행동 범위를 제한할 수 있는가?”**라는 질문을 도출했다. AWS 형식 정책을 사용한 구현은 기사에 없는 내 로컬 실험 설계다.
+기사의 공격을 재현하지는 않았다. 대신 더 작은 질문으로 바꿨다.
 
-## 상태와 범위
+> 역할 자격증명이 노출되더라도 신뢰 관계, 역할 권한, 세션 정책, 명시적 거부를 겹쳐 두면 허용된 작업 밖으로 나가지 못하게 할 수 있을까?
 
-- 상태: **로컬 검증 — 정책 판정 로직만**
-- 환경: Python 3 표준 라이브러리와 합성 AWS ARN·버킷
-- 실제 AWS/Azure 계정, STS 토큰, Service Principal, Resource Lock은 사용하지 않음
-- `111122223333`과 `lab-synthetic-artifacts`는 합성 값
+실제 계정에서 바로 시험하기 전에 정책 관계부터 확실히 이해하고 싶어서 AWS 형식의 합성 정책과 작은 로컬 평가기를 만들었다.
 
-## 구성
+## 이번에 만든 환경
 
-- `caller-permissions.example.json`: 지정된 역할에만 `AssumeRole` 요청 허용
-- `trust-policy.example.json`: 지정한 호출자 역할만 신뢰
-- `role-permissions.example.json`: 합성 버킷 조회 허용, 객체 쓰기·삭제 명시적 거부
-- `session-policy.example.json`: 세션을 버킷 목록 조회 하나로 축소
-- `scenarios.json`: 허용·신뢰 실패·세션 축소·명시적 거부 시나리오 7개
-- `evaluate_policy.py`: 위 정책의 제한된 부분만 판정하는 결정적 로컬 평가기
+실제 AWS나 Azure 계정은 연결하지 않았다. Python 3 표준 라이브러리만 사용했고, 계정 번호 `111122223333`과 버킷 이름 `lab-synthetic-artifacts`도 모두 실습용 값이다.
 
-이 평가기는 AWS IAM Policy Simulator가 아니며 조건 키, SCP, Permission Boundary, Resource Policy 전체 의미론을 구현하지 않는다.
+정책은 네 부분으로 나눴다.
+
+- [`caller-permissions.example.json`](caller-permissions.example.json): 호출자가 요청할 수 있는 역할을 하나로 제한했다.
+- [`trust-policy.example.json`](trust-policy.example.json): 지정한 호출자 역할만 신뢰하도록 했다.
+- [`role-permissions.example.json`](role-permissions.example.json): 합성 버킷 조회는 허용하고 객체 쓰기와 삭제는 명시적으로 거부했다.
+- [`session-policy.example.json`](session-policy.example.json): 세션에서는 버킷 목록 조회만 남겼다.
+
+[`scenarios.json`](scenarios.json)에는 정상 요청과 거부돼야 할 요청을 합쳐 7개를 적었다. [`evaluate_policy.py`](evaluate_policy.py)는 이 실습에서 사용한 `Action`, `Resource`, `Principal`, `Allow`, `Deny`만 판정한다. AWS IAM 전체를 흉내 낸 도구는 아니다. 조건 키, SCP, Permission Boundary, Resource Policy는 처리하지 않는다.
 
 ## 실행
 
@@ -31,39 +30,43 @@ cd F:\main\labs\04-iam-sts
 python .\evaluate_policy.py --directory . --evidence .\evidence\2026-09-28.json
 ```
 
-## 실제 결과
+평가기는 각 시나리오의 예상값과 실제 판정을 비교하고 하나라도 다르면 실패 코드로 끝난다. 실행 결과는 날짜별 JSON으로 남긴다.
 
-| 시나리오 | 관측 | 결과 |
+## 내가 확인한 결과
+
+2026-09-28 실행에서는 7개 시나리오가 전부 예상과 같았다. 허용은 2건, 거부는 5건이었다.
+
+| 해본 요청 | 나온 결과 | 확인한 이유 |
 |---|---|---|
-| 지정 호출자의 역할 요청 | 호출자 정책과 신뢰 정책 모두 일치 | 허용 |
-| 비신뢰 호출자의 역할 요청 | 신뢰 정책 불일치 | 거부 |
-| 합성 버킷 목록 | 역할·세션 정책 교집합 | 허용 |
-| 객체 조회 | 역할은 허용하지만 세션 정책에 없음 | 묵시적 거부 |
-| 객체 쓰기·삭제 | 역할 정책의 `NoBucketWrites` | 명시적 거부 2건 |
-| 계정 전체 버킷 조회 | 어느 정책도 허용하지 않음 | 묵시적 거부 |
+| 지정 호출자가 역할 요청 | 허용 | 호출자 정책과 신뢰 정책이 모두 일치했다. |
+| 다른 호출자가 같은 역할 요청 | 거부 | 호출자 쪽 허용만으로는 부족했고 신뢰 정책에서 막혔다. |
+| 합성 버킷 목록 조회 | 허용 | 역할 정책과 세션 정책에 모두 포함됐다. |
+| 객체 조회 | 묵시적 거부 | 역할은 허용했지만 세션 정책이 권한을 더 좁혔다. |
+| 객체 쓰기와 삭제 | 명시적 거부 | `NoBucketWrites`가 두 요청을 막았다. |
+| 계정 전체 버킷 조회 | 묵시적 거부 | 어느 정책에도 허용 규칙이 없었다. |
 
-예상한 7개 판정이 모두 일치했다. 허용 2건, 거부 5건이다.
+결과 원본은 [2026-09-28 실행 증적](evidence/2026-09-28.json)에 저장했다. 입력 정책과 시나리오의 SHA-256도 같이 기록해 어떤 파일로 실행했는지 다시 확인할 수 있게 했다.
 
-- [실행 증적 JSON](evidence/2026-09-28.json)
+## 해보고 정리한 점
 
-## 검증하지 않은 것
+역할 정책에 읽기 권한이 있어도 세션 정책에 없으면 최종 권한에서 빠졌다. 반대로 세션 정책에 항목을 더 넣는다고 역할 정책보다 권한이 커지지는 않았다. 쓰기와 삭제는 명시적 거부가 우선했다. 이번 실습에서 확인하고 싶었던 것은 이 세 가지 관계였다.
 
-- AWS `AssumeRole`과 임시 자격증명 발급·만료
-- Azure Service Principal과 실제 RBAC
-- 자격증명 탈취·폐기·회전
-- Azure Resource Lock·삭제 보호의 실제 차단
-- 운영 자원에 대한 공격 또는 삭제
+다만 결과를 AWS나 Azure의 실제 방어 효과로 해석할 수는 없다. 로컬 평가기가 정해 둔 정책 일부만 계산했기 때문이다. 아직 다음 항목은 직접 확인하지 못했다.
 
-따라서 이 결과는 **최소 권한 정책 조합의 로컬 판정 검증**이며, AWS/Azure 방어 효과나 실제 Workload Identity 런타임 검증이 아니다.
+- AWS `AssumeRole` 호출과 임시 자격증명의 발급·만료
+- Azure Service Principal과 실제 RBAC 판정
+- 노출된 자격증명의 폐기와 회전
+- Azure Resource Lock과 삭제 보호의 실제 차단
+- 운영 자원에 대한 공격이나 삭제
 
-## 실제 계정 연결 후 확인 절차
+그래서 현재 상태는 **로컬 정책 판정 7/7 통과**로 기록했다. 클라우드 런타임 검증은 아니다.
 
-1. 격리된 합성 버킷과 호출자·대상 역할을 생성한다.
-2. 900초 세션 정책으로 `AssumeRole`을 호출하고 비밀 값 없이 만료 시각만 기록한다.
-3. 범위 내 조회 성공, 범위 밖 조회와 쓰기·삭제 실패를 확인한다.
-4. 만료 후 `ExpiredToken`을 확인한다.
-5. 역할과 버킷을 제거하고 정제된 결정·오류 코드만 증적으로 남긴다.
+## 다음에 실제 계정에서 해볼 순서
 
-## 프로젝트 연결
+1. 격리된 실습 계정에 빈 버킷과 호출자·대상 역할을 만든다.
+2. 900초 세션 정책으로 `AssumeRole`을 호출하고 만료 시각만 기록한다.
+3. 범위 안의 조회는 성공하고, 범위 밖 조회와 쓰기·삭제는 실패하는지 확인한다.
+4. 세션 만료 후 `ExpiredToken`을 확인한다.
+5. 역할과 버킷을 지우고 결정 결과와 오류 코드만 정리해 남긴다.
 
-서브 프로젝트의 향후 Public Cloud Adapter와 Agent Workload Identity 관문에 연결할 수 있다. 어댑터가 `DEFERRED`이고 외부 런타임이 연결되지 않았으므로 서브 프로젝트의 하이브리드 클라우드 또는 Workload Identity 구현 증거로 간주하지 않는다.
+이 흐름은 나중에 `snsd-multicloud-ops`의 Public Cloud Adapter와 Agent Workload Identity를 붙일 때 다시 사용할 생각이다. 현재 그 어댑터는 `DEFERRED` 상태라서 이번 결과를 서브 프로젝트 구현 증거로 포함하지 않았다.

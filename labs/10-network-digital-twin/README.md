@@ -1,12 +1,12 @@
 # Network Digital Twin: 애플리케이션 경로·의도 검증
 
-## 문제와 출처
+## 이걸 해본 이유
 
 [IP Fabric의 Application To Infrastructure Mapping 101](https://ipfabric.io/blog/application-to-infrastructure-mapping/)(2026-09-23)은 애플리케이션·워크로드·흐름을 네트워크 모델과 연결해 실제 경로와 세그멘테이션 정책을 확인하는 문제를 다룬다. [IP Fabric 8.1 릴리스 노트](https://docs.ipfabric.io/latest/releases/release_notes/8.1/)에서도 애플리케이션 흐름이 지나는 장비 계산과 클라우드 보안 정책을 반영한 경로 조회 기능을 설명한다.
 
-여기서 **“읽기 전용 토폴로지 모델로 애플리케이션의 정상 경로, 단일 장애 내성, 금지 흐름을 배포 전에 판정할 수 있는가?”**라는 기술 질문을 도출했다. 아래 구현과 시나리오는 기사에 제시된 제품 기능을 재현한 것이 아니라 내가 만든 합성 실험 설계다.
+제품 없이도 핵심 개념부터 확인해 보고 싶었다. 그래서 질문을 **“읽기 전용 토폴로지로 정상 경로, 단일 장애, 금지 흐름을 변경 전에 판정할 수 있을까?”**로 줄였다. 아래 JSON 모델과 시나리오는 내가 만든 합성 환경이다.
 
-## 상태와 범위
+## 내가 만든 축소 모델
 
 - 상태: **로컬 검증**
 - 환경: Python 3 표준 라이브러리, 합성 JSON 토폴로지
@@ -25,7 +25,7 @@ cd F:\main\labs\10-network-digital-twin
 python .\validate.py --model .\model.json --evidence .\evidence\2026-09-26.json
 ```
 
-## 실제 결과
+## 직접 계산한 결과
 
 | 시나리오 | 의도 | 관측 | 판정 |
 |---|---|---|---|
@@ -37,14 +37,14 @@ python .\validate.py --model .\model.json --evidence .\evidence\2026-09-26.json
 - [실행 증적 JSON](evidence/2026-09-26.json)
 - 증적에는 입력 모델 SHA-256, 비활성 노드, 계산한 경로, 정책 적용 전후 경로 수가 포함된다.
 
-## 한계
+## 계산하면서 보인 한계
 
 - 실제 장비, IP Fabric 제품, 클라우드 API를 사용하지 않았다.
 - JSON 모델은 운영망에서 자동 수집한 상태가 아니므로 입력이 틀리면 결과도 틀릴 수 있다.
 - 라우팅 프로토콜 수렴, ACL 우선순위, NAT, 포트·프로토콜, 지연·손실은 계산하지 않는다.
 - 따라서 결과는 **합성 모델의 로컬 검증**이며 운영망의 실제 도달성 증명이 아니다.
 
-## 다음 단계
+## 다음에 이어서 할 일
 
 1. [01 BGP/ECMP](../01-bgp-ecmp/README.md)의 FRR running-config와 경로 출력을 읽기 전용 수집기로 변환한다.
 2. 변경 전후 스냅샷을 비교해 의도 위반과 영향받는 애플리케이션을 표시한다.

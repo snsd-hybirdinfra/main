@@ -1,12 +1,12 @@
 # 05 백업·복구: 합성 서비스의 RTO/RPO 측정
 
-## 뉴스에서 나온 질문
+## 이걸 해본 이유
 
-[AWS의 DR 계획 글(2026-09-17)](https://aws.amazon.com/blogs/compute/planning-for-disaster-recovery-using-aws-local-zones-and-aws-outposts-racks/)에서 복구 목표와 훈련의 필요성을 읽고 **백업으로 되살리는 시간과 데이터 손실량을 직접 잴 수 있는가?**를 질문으로 정했다. 이 실습은 합성 서비스만 사용하며 AWS Local Zones·Outposts는 시험하지 않았다.
+[AWS의 DR 계획 글(2026-09-17)](https://aws.amazon.com/blogs/compute/planning-for-disaster-recovery-using-aws-local-zones-and-aws-outposts-racks/)을 읽고 RTO와 RPO를 문서에만 적지 말고 직접 재 보기로 했다. **서비스를 지우고 최근 백업으로 복구하면 몇 초가 걸리고 몇 건이 사라질까?**를 작은 SQLite 서비스로 확인했다. AWS Local Zones나 Outposts는 사용하지 않았다.
 
-**상태: 로컬 검증.** Python 표준 라이브러리로 만든 루프백 HTTP 서비스와 SQLite 임시 DB에 대해 스냅샷 복원 실험을 실행했다. 실제 운영 서비스의 복구 시간 보장이 아니다.
+Python 표준 라이브러리로 루프백 HTTP 서비스와 임시 SQLite DB를 만들고 복구 과정을 실제로 실행했다. 여기서 나온 시간은 이 노트북에서 한 번 실행한 값이다.
 
-## 질문과 가설
+## 미리 정한 기대값
 
 합성 서비스를 중단하고 주 DB를 잃었을 때 최근 스냅샷으로 복구하는 데 얼마나 걸리며, 스냅샷 이후 기록은 얼마나 사라지는가?
 
@@ -14,7 +14,7 @@
 - 관측 `RPO`: 마지막 백업 시각부터 장애 시각까지의 간격. 실제 손실 건수도 별도로 기록한다.
 - 예상: 백업 전 3건은 복원, 백업 후 2건은 손실. 복구 뒤 서비스가 응답한다.
 
-## 구성과 실행
+## 어떻게 고장 내고 복구했나
 
 - `service.py`: `127.0.0.1`의 `/events` POST와 `/health` GET만 제공.
 - `run-lab.py`: 임시 디렉터리에서 DB 생성 → 3건 입력 → SQLite backup API로 스냅샷 → 2건 추가 → 프로세스 중단·주 DB 제거 → 잘못된 백업 파일 복원 실패 확인 → 유효한 스냅샷 복원 → 서비스 재기동·응답 확인.
@@ -24,7 +24,7 @@
 python F:\main\labs\05-backup-recovery\run-lab.py
 ```
 
-## 관측 결과
+## 직접 측정한 결과
 
 [2026-09-22 정제 실행 결과](evidence/2026-09-22.json):
 
@@ -40,7 +40,7 @@ python F:\main\labs\05-backup-recovery\run-lab.py
 
 백업→장애 시간은 일부러 짧게 만든 실습 구간이다. 이 수치와 2건 손실은 해당 한 번의 실행에서만 측정되었다. DB 백업은 애플리케이션 수준 일관성·오프사이트 저장·암호화·정기 백업·가용성 그룹까지 검증하지 않는다. 같은 코드를 다시 실행하면 OS 부하에 따라 RTO가 달라진다.
 
-## 개인 프로젝트 연결
+## 다음에 프로젝트에서 확인할 것
 
 서브 프로젝트의 운영 증적으로 옮기려면 실제 대상 서비스의 데이터 일관성 검증, 주기별 복구 훈련, 격리된 백업, 복원 권한, 여러 번 측정한 시간 분포가 필요하다. 이 실습 결과를 그 환경의 RTO/RPO로 쓰지 않는다.
 
