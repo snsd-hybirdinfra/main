@@ -1,6 +1,6 @@
 # 뉴스에서 시작한 기술 실습
 
-2026-09-26까지 ChatGPT 웹의 「IT·보안 데일리 브리핑」과 기사 원문을 대조했다. 이 저장소는 뉴스 스크랩이 아니라 **기사의 문제 → 내가 세운 기술 질문 → 직접 실행한 실습 → 증적과 한계**를 기록한다. 기사에 없는 구현 기술은 내 실험 설계로 구분한다.
+2026-09-26 브리핑까지 ChatGPT 웹의 「IT·보안 데일리 브리핑」과 기사 원문을 대조했다. 이 저장소는 뉴스 스크랩이 아니라 **기사의 문제 → 내가 세운 기술 질문 → 직접 실행한 실습 → 증적과 한계**를 기록한다. 기사에 없는 구현 기술은 내 실험 설계로 구분한다.
 
 | 원문과 발행일 | 내가 세운 질문 | 실습과 관측 | 검증하지 않은 것 |
 |---|---|---|---|
@@ -14,6 +14,7 @@
 | Cisco AI 네트워크 글 | 공유 병목에서 처리량과 지연이 어떻게 바뀌는가? | [08 AI DC Network](../labs/08-ai-dc-network/README.md): 20 Mbit/s 가상 링크의 TCP 약 19 Mbit/s·부하 중 ping 69.16 ms [증적](../labs/08-ai-dc-network/evidence/2026-09-22.json) | GPU/RDMA/RoCE·ECN/PFC·광 연결 |
 | [F5 CVE-2026-94127 권고](https://my.f5.com/manage/s/article/K000162605)와 [CISA KEV 공지](https://www.cisa.gov/news-events/alerts/2026/09/22/cisa-adds-four-known-exploited-vulnerabilities-catalog), 2026-09-22 | 백엔드 하나가 중단돼도 서비스가 유지되고 복구 후 다시 분산되는가? | [09 Load Balancer HA](../labs/09-load-balancer-ha/README.md): 정상 4:4, web01 중단 중 web02 8/8, 복구 후 4:4 [증적](../labs/09-load-balancer-ha/evidence/2026-09-24.json) | F5 제품·APM·OAuth·취약점 재현, TLS·WAF·성능 |
 | [IP Fabric 애플리케이션 인프라 매핑 글](https://ipfabric.io/blog/application-to-infrastructure-mapping/), 2026-09-23 및 [8.1 릴리스 노트](https://docs.ipfabric.io/latest/releases/release_notes/8.1/) | 읽기 전용 모델로 애플리케이션 경로, 단일 장애 내성, 금지 흐름을 배포 전에 판정할 수 있는가? | [10 Network Digital Twin](../labs/10-network-digital-twin/README.md): 정상 경로 2개, spine1 중단 후 경로 1개, 두 Spine 중단 후 경로 0개, guest→admin 정책 거부 [증적](../labs/10-network-digital-twin/evidence/2026-09-26.json) | IP Fabric 제품·실제 장비/API, 자동 수집, 라우팅 수렴, ACL/NAT·포트 판정 |
+| [CISA KEV 공식 JSON](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json), `dateAdded` 2026-09-25·확인 2026-09-27 | CVSS만 보지 않고 KEV·노출·자산 중요도·관리 Plane·조치 기한을 결합하면 어떤 자산이 먼저 올라오는가? | [11 Vulnerability Prioritization](../labs/11-vulnerability-prioritization/README.md): RouterOS·SharePoint KEV 2건과 합성 자산 3건을 판정해 P0 2건, P2 1건, P3 2건 [증적](../labs/11-vulnerability-prioritization/evidence/2026-09-27.json) | 실제 자산 버전·노출·패치 상태, CVSS/EPSS, 변경 승인·패치 후 검증 |
 
 이 표의 질문과 구현 방식은 원문을 읽고 **내가 도출한 것**이다. 각 기사에서 위 토폴로지나 측정값을 제시했다는 뜻은 아니다. 원문의 발행일을 사용했고 별도 사건일이 확인되지 않은 발표에 사건일을 임의로 붙이지 않았다.
 

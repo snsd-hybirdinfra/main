@@ -1,19 +1,51 @@
-# 개인 프로젝트 연결
+# 독립 실습과 구현 프로젝트의 연결
 
-## 주 프로젝트와 서브 프로젝트
+## 저장소 역할
 
-- **주 정리 공간:** `F:\main` — 브리핑의 기술 흐름, 학습 계획, 독립 실습 및 결과.
-- **서브 프로젝트:** [snsd-multicloud-ops](https://github.com/snsd-hybirdinfra/snsd-multicloud-ops) — 가상 증권사 비운영 환경의 Hybrid-Ready Private Cloud IDP.
+| 저장소 | 역할 | 상태 권위 |
+|---|---|---|
+| `F:\main` | 뉴스 원문에서 기술 질문을 도출하고 독립 실습과 증적을 축적 | 이 저장소의 `README`, `docs/news-to-labs.md`, 각 실습 README |
+| [snsd-multicloud-ops](https://github.com/snsd-hybirdinfra/snsd-multicloud-ops) | 가상 증권사 Hybrid-Ready Private Cloud IDP 구현 | 서브 프로젝트의 플랫폼 기준선·구현 로드맵·Zero Trust 권위 문서 |
 
-서브 프로젝트의 상태 권위는 해당 저장소의 [README](https://github.com/snsd-hybirdinfra/snsd-multicloud-ops/blob/main/README.md), 아키텍처 기준선, 구현 로드맵에 있습니다. 이곳에서는 연결 관계만 정리하고 구현·검증 상태를 임의로 올리지 않습니다.
+독립 실습의 통과가 서브 프로젝트 통합 완료를 뜻하지 않습니다. 서브 프로젝트의 파일이 존재한다는 사실도 배포·런타임 검증을 뜻하지 않습니다.
 
-| main 실습 | 서브 프로젝트에서 연결되는 문제 |
+## 서브 프로젝트 현재 상태
+
+2026-09-28에 서브 프로젝트의 `README`, `docs/platform/implementation-roadmap.md`, `docs/platform/architecture-baseline.yaml`을 대조했습니다.
+
+| 영역 | 현재 상태 |
 |---|---|
-| BGP/ECMP, EVPN/VXLAN | 금융 네트워크 언더레이의 라우팅, 분리, 장애 수렴 |
-| RESTCONF/Python | 장비 상태 수집과 운영 자동화 |
-| IAM/STS | 향후 퍼블릭 클라우드 어댑터의 단기 자격증명 설계 |
-| 복구 실습 | 합성 서비스의 백업·복원·재구축 |
-| AAA/RADIUS | 관리망 접근 제어 |
-| AI Agent Security | Agent Sandbox의 격리·승인·통신·예산·감사 |
+| Authority & Inventory | `COMPLETED_LOCAL` |
+| Private IaaS Golden Path | `IN_PROGRESS_LOCAL` |
+| k3s PaaS Golden Path | `PARTIAL` |
+| Financial Network Fabric | `DESIGN_ONLY` |
+| Integrated Operations | `PARTIAL` |
+| Public Cloud Adapter | `DEFERRED` |
+| 플랫폼 종단 간 런타임 | `NOT_VALIDATED` |
 
-현재 퍼블릭 클라우드 실연동, 금융 네트워크 런타임, 플랫폼 전체 종단 간 검증은 완료 성과로 표시하지 않습니다.
+따라서 프로젝트 표현은 **Hybrid-Ready Private Cloud IDP**를 유지합니다.
+
+## 실습 연결 지도
+
+| main 실습 | 서브 프로젝트에서 연결되는 문제 | 적용 상태 |
+|---|---|---|
+| 01 BGP/ECMP, 02 EVPN/VXLAN | 금융 네트워크 언더레이의 경로 이중화와 세그멘테이션 | 독립 실습 완료, 서브 프로젝트 Network Fabric은 `DESIGN_ONLY` |
+| 03 RESTCONF/Python | 장비 상태 수집과 운영 자동화 | 설계; 실제 장비 API·CLI 대조 대기 |
+| 04 IAM/STS | 향후 퍼블릭 클라우드 어댑터의 단기 자격증명 | 설계; 어댑터는 `DEFERRED` |
+| 05 Backup & Recovery | 플랫폼 수명주기와 복구 증적 | 합성 서비스 로컬 검증; 통합 복구는 `PARTIAL` |
+| 06 AAA/RADIUS | 관리망 접근 제어 | 독립 로컬 검증; 금융망 적용 미검증 |
+| 07 AI Agent Security | AI Agent Sandbox의 권한·통신·예산·승인 경계 | 독립 게이트 검증; 서브 프로젝트는 `PARTIALLY_IMPLEMENTED_LOCAL / NOT_VALIDATED` |
+| 08 AI DC Network | 향후 GPU 워크로드의 병목과 관측 | 제한된 가상 링크 검증; GPU/RDMA 미검증 |
+| 09 Load Balancer HA | 포털·서비스 경계의 가용성 | Nginx 합성 검증; 플랫폼 통합 미검증 |
+| 10 Network Digital Twin | 변경 전 경로·정책 의도 검증 | 합성 모델 검증; 실제 장비 수집 미검증 |
+| 11 Vulnerability Prioritization | 네트워크·플랫폼 자산의 패치 우선순위 | 합성 인벤토리 검증; 실제 CMDB·버전·패치 미검증 |
+
+## 승격 조건
+
+독립 실습을 서브 프로젝트 성과로 연결하려면 다음이 모두 필요합니다.
+
+1. 서브 프로젝트의 권위 문서에 적용 범위와 소유자를 기록합니다.
+2. 실제 대상의 구성·버전·경계를 확인합니다.
+3. 정상·거부·장애·복구 검증을 수행합니다.
+4. 정제 증적을 해당 프로젝트의 승인된 증적 위치에 저장합니다.
+5. 상태 결정 문서가 구현과 증적을 근거로 승격합니다.

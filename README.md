@@ -1,61 +1,78 @@
-# Network · Cloud · AI Infrastructure Labs
+# News-to-Lab Infrastructure Portfolio
 
-「IT·보안 데일리 브리핑」의 뉴스를 읽고 **기술 문제를 뽑아 직접 시험한** 네트워크·클라우드·보안·AI 인프라 포트폴리오입니다. 각 기록은 **원문 → 내가 세운 질문 → 실습 → 관측 증적 → 검증 한계**로 이어집니다.
-
-> 상태: BGP/ECMP와 EVPN/VXLAN 실습을 FRR 컨테이너에서 로컬 검증했습니다. 백업·복구, AAA/RADIUS, AI Agent Security, AI DC Network, Load Balancer HA, Network Digital Twin은 범위를 제한한 합성 환경에서 로컬 검증했습니다. RESTCONF/Python과 IAM/STS는 설계 상태입니다.
-
-## 읽는 순서
-
-1. [뉴스에서 시작한 기술 실습: 출처·질문·증적](docs/news-to-labs.md)
-2. [브리핑에서 추린 기술 흐름](docs/industry-trends.md)
-3. [실습 로드맵과 검증 기준](docs/lab-roadmap.md)
-4. [커리어 로드맵](docs/career-roadmap.md)
-5. [개인 프로젝트 연결](docs/project-map.md)
-6. [업데이트 기록](docs/update-log.md)
-
-## 뉴스가 실습으로 이어진 예
-
-| 확인한 원문 | 내가 검증한 기술 질문 | 실제 결과 |
-|---|---|---|
-| [Cisco의 AI 네트워크 글](https://blogs.cisco.com/news/the-ai-era-demands-more-than-speed-building-secure-intelligent-networks-from-silicon-to-optics) | Spine 장애에도 BGP/ECMP 경로와 통신이 유지되는가? | [FRR 실습](labs/01-bgp-ecmp/README.md)에서 대체 경로 1개·ping 3/3 |
-| [AWS의 DR 계획 글](https://aws.amazon.com/blogs/compute/planning-for-disaster-recovery-using-aws-local-zones-and-aws-outposts-racks/) | 백업으로 합성 서비스를 얼마나 빨리 되살리는가? | [복구 실습](labs/05-backup-recovery/README.md)에서 RTO 1.627초·손실 2건 |
-| [Google Cloud의 Agent 보안 글](https://cloud.google.com/blog/topics/systems/using-ai-agents-to-secure-google-infrastructure/) | 도구 사용과 외부 통신을 정책으로 거부할 수 있는가? | [로컬 하네스](labs/07-ai-agent-security/README.md)의 허용·거부 확인 |
-| [IP Fabric의 애플리케이션 인프라 매핑 글](https://ipfabric.io/blog/application-to-infrastructure-mapping/) | 읽기 전용 모델로 경로·장애 내성·세그멘테이션 의도를 판정할 수 있는가? | [Network Digital Twin](labs/10-network-digital-twin/README.md)에서 정상 경로 2개·단일 장애 경로 1개·거부 정책 확인 |
-
-위 기술 질문은 원문에서 **내가 도출한 실험 설계**입니다. 기사 속 제품이나 실제 AI 워크로드를 시험했다는 뜻은 아닙니다. 10개 실습의 연결은 [뉴스 → 기술 실습 기록](docs/news-to-labs.md)에 있습니다.
-
-## 학습 흐름
+「IT·보안 데일리 브리핑」에서 운영 문제를 찾고, 원문을 확인한 뒤 직접 시험 가능한 기술 질문으로 바꾸는 네트워크·클라우드·보안·AI 인프라 포트폴리오입니다.
 
 ```text
-Routing & Switching → BGP/ECMP → Spine-Leaf → EVPN/VXLAN
-                   → Network Automation → Private/Cloud Networking
-                   → Kubernetes → AI Data Center Infrastructure
+브리핑 → 원문 확인 → 기술 질문 → 실습 설계 → 정상·장애·거부 검증 → 증적 → 한계 → 프로젝트 적용
 ```
 
-## 완료한 실습
+기사에 나온 사실과 내가 만든 구현을 분리합니다. 실행하지 않은 구성은 성공으로 적지 않으며, 합성 환경과 실제 런타임을 같은 상태로 표시하지 않습니다.
 
-- [BGP/ECMP Spine-Leaf: 정상 경로 2개, Spine 장애 시 통신 유지, 복구 후 경로 재형성](labs/01-bgp-ecmp/README.md)
-- [EVPN/VXLAN: VNI 100·200 통신과 VNI 간 격리](labs/02-evpn-vxlan/README.md)
-- [백업·복구: 합성 서비스 RTO 1.627초, 손실 2건](labs/05-backup-recovery/README.md)
-- [AAA/RADIUS: 승인 1건, 거부 2건](labs/06-aaa-radius/README.md)
-- [AI Agent Security: 도구·통신·예산·합성 승인 경계](labs/07-ai-agent-security/README.md)
-- [AI DC Network: 20 Mbit/s 가상 병목의 처리량·지연](labs/08-ai-dc-network/README.md)
-- [Load Balancer HA: 정상 4:4 분산, web01 장애 중 web02 응답 8/8, 복구 후 4:4](labs/09-load-balancer-ha/README.md)
-- [Network Digital Twin: 정상 경로 2개, Spine 1대 장애 경로 1개, 세그멘테이션 거부](labs/10-network-digital-twin/README.md)
+## 현재 상태
 
-## 설계 중인 실습
+| 구분 | 수량 | 의미 |
+|---|---:|---|
+| 전체 실습 | 11 | 뉴스에서 도출한 독립 기술 질문 |
+| 로컬 검증 | 9 | 코드·컨테이너·합성 모델에서 직접 실행하고 증적 저장 |
+| 설계 | 2 | 구성과 제한된 접근 결과만 있으며 실제 플랫폼 검증 대기 |
+| 실제 운영 검증 | 0 | 운영·고객 환경 성과를 주장하지 않음 |
 
-- [RESTCONF/Python: 공개 IOS XE 샌드박스 HTTP 401, 실제 CLI 대조 대기](labs/03-restconf-python/README.md)
-- [IAM/STS: AWS 계정 검증 대기](labs/04-iam-sts/README.md)
+## 실습 카탈로그
 
-## 운영 원칙
+### Network & Data Center
 
-- 뉴스와 업계 전망은 **주제 선정의 배경**으로 기록합니다.
-- 실습은 **문제 → 가설 → 구성 → 정상·장애·보안 검증 → 결과 → 한계** 순서로 정리합니다.
-- **계획 / 설계 / 로컬 검증 / 런타임 검증** 상태를 구분합니다.
-- 출처 링크와 보도일, 사건 발생일을 함께 남기며 같은 뉴스를 중복 적재하지 않습니다.
-- 실제 자격증명·계정 식별자, 고객 정보, 원시 로그는 올리지 않습니다. 실습용 합성 계정은 별도로 표시합니다.
+| 실습 | 상태 | 확인한 결과 |
+|---|---|---|
+| [01 BGP/ECMP](labs/01-bgp-ecmp/README.md) | 로컬 검증 | 정상 경로 2개, Spine 장애 후 대체 경로 1개와 ping 3/3 |
+| [02 EVPN/VXLAN](labs/02-evpn-vxlan/README.md) | 로컬 검증 | VNI 100·200 내부 통신과 VNI 간 격리 |
+| [08 AI DC Network](labs/08-ai-dc-network/README.md) | 로컬 검증 | 20 Mbit/s 가상 병목의 처리량과 부하 중 지연 |
+| [09 Load Balancer HA](labs/09-load-balancer-ha/README.md) | 로컬 검증 | 정상 4:4 분산, 백엔드 장애 중 서비스 유지, 복구 후 재분산 |
+| [10 Network Digital Twin](labs/10-network-digital-twin/README.md) | 로컬 검증 | 정상 2경로, 단일 장애 1경로, 이중 장애 0경로, 정책 거부 |
 
-## 연결된 서브 프로젝트
+### Cloud & Automation
 
-[snsd-multicloud-ops](https://github.com/snsd-hybirdinfra/snsd-multicloud-ops)는 가상 증권사 비운영 환경을 위한 **Hybrid-Ready Private Cloud IDP** 프로젝트입니다. 이 main 저장소는 서브 프로젝트의 실제 구현·검증을 참조하되, 이곳 `main`의 뉴스·학습·실습 기록과 상태를 혼동하지 않습니다. 현재 퍼블릭 클라우드 연동은 검증되지 않았습니다.
+| 실습 | 상태 | 확인한 결과 |
+|---|---|---|
+| [03 RESTCONF/Python](labs/03-restconf-python/README.md) | 설계 | 읽기 전용 코드와 공개 샌드박스 HTTP 401; API·CLI 대조 대기 |
+| [04 IAM/STS](labs/04-iam-sts/README.md) | 설계 | 예시 정책 구문 확인; AWS 계정 실행 대기 |
+| [05 Backup & Recovery](labs/05-backup-recovery/README.md) | 로컬 검증 | 합성 서비스 RTO 1.627초, 손실 2건 |
+
+### Security & Operations
+
+| 실습 | 상태 | 확인한 결과 |
+|---|---|---|
+| [06 AAA/RADIUS](labs/06-aaa-radius/README.md) | 로컬 검증 | 승인 1건, 거부 2건 |
+| [07 AI Agent Security](labs/07-ai-agent-security/README.md) | 로컬 검증 | 도구·통신·예산·합성 승인 경계의 허용·거부 |
+| [11 Vulnerability Prioritization](labs/11-vulnerability-prioritization/README.md) | 로컬 검증 | CISA KEV·노출·중요도·관리 Plane·기한을 결합한 합성 자산 우선순위 |
+
+## 문서 구조
+
+| 문서 | 역할 |
+|---|---|
+| [뉴스 → 기술 실습](docs/news-to-labs.md) | 원문, 발행일, 내 질문, 실행 증적, 미검증 범위의 권위 기록 |
+| [기술 흐름](docs/industry-trends.md) | 브리핑에서 반복되는 산업·운영 문제의 분류 |
+| [실습 로드맵](docs/lab-roadmap.md) | 실습 순서, 상태, 완료 기준 |
+| [커리어 로드맵](docs/career-roadmap.md) | 네트워크 기반에서 클라우드·보안·AI 인프라로 확장하는 순서 |
+| [프로젝트 연결](docs/project-map.md) | 독립 실습과 `snsd-multicloud-ops`의 역할·상태 경계 |
+| [업데이트 기록](docs/update-log.md) | 날짜별 변경과 검증 결과 |
+
+## 저장소 역할
+
+```text
+F:\main
+├─ docs/   뉴스·로드맵·상태·프로젝트 연결
+└─ labs/   독립 재현 실습과 정제 증적
+
+snsd-multicloud-ops
+└─ 가상 증권사 Hybrid-Ready Private Cloud IDP 구현
+```
+
+이 저장소는 학습·실험의 주 저장소입니다. [snsd-multicloud-ops](https://github.com/snsd-hybirdinfra/snsd-multicloud-ops)는 연결된 구현 프로젝트이며, 실제 상태는 그 저장소의 권위 문서를 따릅니다. 현재 퍼블릭 클라우드 어댑터는 `DEFERRED`, 금융 네트워크는 `DESIGN_ONLY`, 플랫폼 종단 간 런타임은 `NOT_VALIDATED`입니다.
+
+## 기록 원칙
+
+- 원문 링크와 발행일을 확인하고, 별도 사건일이 확인된 경우에만 사건일을 기록합니다.
+- **계획 / 설계 / 로컬 검증 / 런타임 검증**을 구분합니다.
+- 합성 데이터·계정·자산은 실제 데이터와 구분합니다.
+- 실제 자격증명, 계정 식별자, 고객 정보, 원시 운영 로그는 저장하지 않습니다.
+- 서브 프로젝트의 구현 상태를 이 저장소에서 임의로 승격하지 않습니다.

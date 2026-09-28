@@ -53,6 +53,20 @@
 - 정상 상태 2개 경로, spine1 중단 후 1개 경로, 두 Spine 중단 후 0개 경로, `guest → admin` 정책 거부를 확인했다.
 - IP Fabric 제품, 실제 장비/API, 자동 수집, 라우팅 수렴, ACL/NAT·포트 판정은 검증하지 않았다.
 
+## 2026-09-27 — CISA KEV에서 취약점 우선순위 실습으로
+
+- 9월 26일 브리핑의 RouterOS·SharePoint 실제 악용 항목을 CISA KEV 공식 JSON에서 확인했다.
+- [Vulnerability Prioritization](../labs/11-vulnerability-prioritization/README.md)에 공식 CVE·기한과 합성 자산 맥락을 분리해 기록했다.
+- KEV·인터넷 노출·중요도·관리 Plane·기한을 결합한 로컬 규칙으로 P0 2건, P2 1건, P3 2건을 계산했다.
+- 실제 자산 버전·노출·패치 상태와 패치 후 검증은 수행하지 않았다.
+
+## 2026-09-28 — 저장소 역할과 상태 중심으로 재구성
+
+- README를 완료 목록 중심에서 **현재 상태 → 분야별 실습 → 문서 역할 → 저장소 경계** 순서로 재구성했다.
+- 11개 실습을 Network & Data Center, Cloud & Automation, Security & Operations로 묶고 9개 로컬 검증·2개 설계 상태를 표시했다.
+- [프로젝트 연결 지도](project-map.md)를 서브 프로젝트의 최신 권위 문서와 대조해 Stage별 실제 상태와 실습별 승격 조건을 정리했다.
+- `snsd-multicloud-ops` 구현 파일과 상태는 변경하지 않았다.
+
 ## 이후 갱신 양식
 
 ### YYYY-MM-DD

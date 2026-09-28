@@ -6,9 +6,10 @@
 |---|---|---|
 | 1. 네트워크 기반 | CCNP 수준의 OSPF, BGP, 스위칭, 이중화, QoS, AAA | 정상·장애 경로를 설명하고 재현 |
 | 2. 데이터센터 네트워크 | Spine-Leaf, ECMP, BGP Fabric, EVPN/VXLAN | 토폴로지와 경로 수렴·분리 증적 |
-| 3. 자동화 | Python, RESTCONF/NETCONF, YANG, Telemetry | CLI와 API 결과 대조, 반복 점검 코드 |
+| 3. 자동화·Assurance | Python, RESTCONF/NETCONF, YANG, Telemetry, Digital Twin | CLI/API 대조, 경로·의도 검증, 반복 점검 코드 |
 | 4. 클라우드·플랫폼 | Linux, OpenStack/AWS 네트워크, IAM, Terraform, Kubernetes | 최소 권한·네트워크·복구 실습 |
-| 5. AI 인프라 | GPU 클러스터 네트워크, RoCEv2, 혼잡 제어, 광 연결, 관측 | 개념 정리 후 재현 가능한 범위의 실험 |
+| 5. 보안 운영 | AAA, 관리 Plane, KEV, 취약점 우선순위, 감사 | 허용·거부와 자산 기반 조치 순서를 증적으로 설명 |
+| 6. AI 인프라 | GPU 클러스터 네트워크, RoCEv2, 혼잡 제어, 광 연결, 관측 | 개념 정리 후 재현 가능한 범위의 실험 |
 
 보안은 각 단계에 함께 적용합니다. 우선순위는 자격증명 관리와 최소 권한 → 네트워크 분리 → 취약점·공급망 관리 → 관측·감사 → Agent 보안입니다.
 
