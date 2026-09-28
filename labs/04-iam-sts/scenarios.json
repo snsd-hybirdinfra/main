@@ -1,0 +1,48 @@
+{
+  "assume_role": [
+    {
+      "name": "named-caller-can-request-role",
+      "caller_arn": "arn:aws:iam::111122223333:role/lab-caller",
+      "role_arn": "arn:aws:iam::111122223333:role/lab-readonly",
+      "expected_allowed": true
+    },
+    {
+      "name": "untrusted-caller-is-rejected",
+      "caller_arn": "arn:aws:iam::111122223333:role/untrusted-caller",
+      "role_arn": "arn:aws:iam::111122223333:role/lab-readonly",
+      "expected_allowed": false
+    }
+  ],
+  "session_actions": [
+    {
+      "name": "session-can-list-synthetic-bucket",
+      "action": "s3:ListBucket",
+      "resource": "arn:aws:s3:::lab-synthetic-artifacts",
+      "expected_allowed": true
+    },
+    {
+      "name": "session-boundary-blocks-object-read",
+      "action": "s3:GetObject",
+      "resource": "arn:aws:s3:::lab-synthetic-artifacts/report.txt",
+      "expected_allowed": false
+    },
+    {
+      "name": "explicit-deny-blocks-object-write",
+      "action": "s3:PutObject",
+      "resource": "arn:aws:s3:::lab-synthetic-artifacts/report.txt",
+      "expected_allowed": false
+    },
+    {
+      "name": "explicit-deny-blocks-object-delete",
+      "action": "s3:DeleteObject",
+      "resource": "arn:aws:s3:::lab-synthetic-artifacts/report.txt",
+      "expected_allowed": false
+    },
+    {
+      "name": "unlisted-account-action-is-denied",
+      "action": "s3:ListAllMyBuckets",
+      "resource": "*",
+      "expected_allowed": false
+    }
+  ]
+}

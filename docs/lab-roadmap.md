@@ -2,14 +2,14 @@
 
 각 주제를 선택한 뉴스 원문, 내가 도출한 질문, 실제 증적과 한계는 [뉴스 → 기술 실습 기록](news-to-labs.md)에 있습니다.
 
-상태 표기는 `계획`, `설계`, `로컬 검증`, `런타임 검증`을 사용합니다. 현재 11개 실습 중 9개는 컨테이너·코드·합성 모델에서 **로컬 검증**, RESTCONF/Python과 IAM/STS 2개는 **설계** 상태입니다. 실제 운영 환경에서 검증한 실습은 없습니다.
+상태 표기는 `계획`, `설계`, `로컬 검증`, `런타임 검증`을 사용합니다. 현재 11개 실습 중 10개는 컨테이너·코드·합성 모델에서 **로컬 검증**, RESTCONF/Python 1개는 **설계** 상태입니다. 실제 운영 환경에서 검증한 실습은 없습니다.
 
 | 순서 | 주제 | 직접 확인할 질문 | 남길 증적 |
 |---|---|---|---|
 | 1 | [BGP/ECMP Spine-Leaf](../labs/01-bgp-ecmp/README.md) — 로컬 검증 | 링크 또는 Spine 장애 후 경로가 수렴하고 통신이 유지되는가? | [설정과 실행 출력](../labs/01-bgp-ecmp/evidence/2026-09-22.txt), 장애 전후 경로·ping |
 | 2 | [EVPN/VXLAN](../labs/02-evpn-vxlan/README.md) — 로컬 검증 | 분리된 세그먼트의 허용·거부 통신이 의도대로 동작하는가? | [BGP EVPN·VNI·FDB 및 ping 출력](../labs/02-evpn-vxlan/evidence/2026-09-22.txt) |
 | 3 | [RESTCONF/Python](../labs/03-restconf-python/README.md) — 설계 | API 조회 결과가 장비 CLI 상태와 일치하는가? | [읽기 전용 코드와 HTTP 401 증적](../labs/03-restconf-python/evidence/2026-09-22.txt); 실제 대조 대기 |
-| 4 | [IAM/STS](../labs/04-iam-sts/README.md) — 설계 | 역할 위임, 최소 권한, 자격증명 만료가 동작하는가? | 예시 정책 4개; 계정 실행 대기 |
+| 4 | [IAM/STS](../labs/04-iam-sts/README.md) — 로컬 검증 | 신뢰 관계·역할·세션 정책·명시적 거부로 Workload Identity 행동 범위를 줄일 수 있는가? | [합성 정책 판정 7/7 일치](../labs/04-iam-sts/evidence/2026-09-28.json); AWS/Azure 발급·만료·Resource Lock은 미검증 |
 | 5 | [백업·복구](../labs/05-backup-recovery/README.md) — 로컬 검증 | 합성 서비스를 복원하거나 재구축하는 데 얼마나 걸리는가? | [RTO 1.627초·손실 2건](../labs/05-backup-recovery/evidence/2026-09-22.json) |
 | 6 | [AAA/RADIUS](../labs/06-aaa-radius/README.md) — 로컬 검증 | 등록된 사용자만 RADIUS 인증을 통과하는가? | [Access-Accept 1건·Access-Reject 2건](../labs/06-aaa-radius/evidence/2026-09-22.txt) |
 | 7 | [AI Agent Security](../labs/07-ai-agent-security/README.md) — 로컬 검증 | 도구의 권한·통신·예산·합성 승인 경계가 지켜지는가? | [결정적 게이트 실행 결과](../labs/07-ai-agent-security/evidence/2026-09-22.json); 실제 Agent 런타임 대기 |

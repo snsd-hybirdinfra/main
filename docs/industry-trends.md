@@ -54,6 +54,12 @@ HA, 백업, 복원, 재구축, RTO/RPO를 분리해 봅니다. 현재 개인 프
 
 **실습 연결:** 공격을 재현하지 않고 공식 KEV 2건과 합성 자산 정보를 결합해 우선순위를 계산했습니다. 실제 버전 식별, 패치, 서비스 검증은 수행하지 않았습니다.
 
+## 10. Workload Identity와 독립 Guardrail
+
+9월 28일 브리핑의 [Microsoft Storm-3168 분석](https://www.microsoft.com/en-us/security/blog/2026/09/25/storm-3168-agentic-driven-cloud-attacks-using-compromised-service-principals/)은 탈취된 Service Principal이 짧은 시간에 대량 삭제를 시도했고, 일부 Storage는 Resource Lock과 삭제 보호로 차단됐다고 설명합니다. 사람 계정뿐 아니라 Service Principal·IAM Role·Service Account의 최소 권한과 자격증명 수명주기가 클라우드 복원력의 핵심입니다.
+
+**실습 연결:** AWS 형식의 합성 신뢰·역할·세션 정책으로 허용 2건과 거부 5건을 로컬 판정했습니다. Azure Resource Lock과 실제 클라우드 자격증명은 검증하지 않았습니다.
+
 ## 새 브리핑을 반영하는 기준
 
 새 기사를 바로 실습 성과로 쓰지 않습니다. 출처·보도일·사건일을 확인하고, 이 문서의 기존 흐름을 강화하는지 또는 새 문제를 제시하는지 판단합니다. 실제 구성이나 측정이 생기면 [뉴스 → 기술 실습 기록](news-to-labs.md)에 원문과 증적을 연결하고 [실습 로드맵](lab-roadmap.md)의 상태를 갱신합니다.

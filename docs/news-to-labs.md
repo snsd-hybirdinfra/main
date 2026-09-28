@@ -1,13 +1,13 @@
 # 뉴스에서 시작한 기술 실습
 
-2026-09-26 브리핑까지 ChatGPT 웹의 「IT·보안 데일리 브리핑」과 기사 원문을 대조했다. 이 저장소는 뉴스 스크랩이 아니라 **기사의 문제 → 내가 세운 기술 질문 → 직접 실행한 실습 → 증적과 한계**를 기록한다. 기사에 없는 구현 기술은 내 실험 설계로 구분한다.
+2026-09-28 브리핑까지 ChatGPT 웹의 「IT·보안 데일리 브리핑」과 기사 원문을 대조했다. 이 저장소는 뉴스 스크랩이 아니라 **기사의 문제 → 내가 세운 기술 질문 → 직접 실행한 실습 → 증적과 한계**를 기록한다. 기사에 없는 구현 기술은 내 실험 설계로 구분한다.
 
 | 원문과 발행일 | 내가 세운 질문 | 실습과 관측 | 검증하지 않은 것 |
 |---|---|---|---|
 | [Cisco AI 네트워크 글](https://blogs.cisco.com/news/the-ai-era-demands-more-than-speed-building-secure-intelligent-networks-from-silicon-to-optics), 2026-09-21 | 경로 하나가 사라져도 연결이 유지되는가? | [01 BGP/ECMP](../labs/01-bgp-ecmp/README.md): FRR Spine 장애 후 대체 경로와 ping [증적](../labs/01-bgp-ecmp/evidence/2026-09-22.txt) | AI 워크로드·상용 장비 |
 | 같은 Cisco 글 | 테넌트 세그먼트를 분리할 수 있는가? | [02 EVPN/VXLAN](../labs/02-evpn-vxlan/README.md): VNI 100·200 허용·격리 [증적](../labs/02-evpn-vxlan/evidence/2026-09-22.txt) | L3VNI·상용 패브릭 |
 | [Nokia 자동화 발표](https://www.nokia.com/newsroom/nokia-accelerates-network-automation-through-agentic-unified-data-foundation-with-microsoft/), 2026-09-17 | API 상태를 CLI와 대조할 수 있는가? | [03 RESTCONF/Python](../labs/03-restconf-python/README.md): 읽기 전용 코드와 HTTP 401 [증적](../labs/03-restconf-python/evidence/2026-09-22.txt). **설계** | API·CLI 실제 일치 |
-| [Google 위협 분석](https://cloud.google.com/blog/topics/threat-intelligence/from-prompting-to-autonomy-the-evolution-of-adversarial-ai), 2026-09-08 | 자격증명 오용 위험에 최소 권한·단기 자격증명을 적용할 수 있는가? | [04 IAM/STS](../labs/04-iam-sts/README.md): 예시 정책 구문 확인. **설계** | AWS 계정 실행·공격 재현 |
+| [Google 위협 분석](https://cloud.google.com/blog/topics/threat-intelligence/from-prompting-to-autonomy-the-evolution-of-adversarial-ai), 2026-09-08 및 [Microsoft Storm-3168 분석](https://www.microsoft.com/en-us/security/blog/2026/09/25/storm-3168-agentic-driven-cloud-attacks-using-compromised-service-principals/), 2026-09-25 | 탈취된 Workload Identity의 행동을 신뢰 관계·역할·세션 정책·명시적 거부로 제한할 수 있는가? | [04 IAM/STS](../labs/04-iam-sts/README.md): 합성 정책 판정 7/7 일치, 허용 2·거부 5 [증적](../labs/04-iam-sts/evidence/2026-09-28.json). **로컬 검증** | AWS/Azure 런타임, STS 발급·만료, 자격증명 회전, Azure Resource Lock |
 | [AWS DR 계획 글](https://aws.amazon.com/blogs/compute/planning-for-disaster-recovery-using-aws-local-zones-and-aws-outposts-racks/), 2026-09-17 | 백업으로 복구 시간과 손실량을 잴 수 있는가? | [05 백업·복구](../labs/05-backup-recovery/README.md): 합성 서비스 RTO 1.627초·손실 2건 [증적](../labs/05-backup-recovery/evidence/2026-09-22.json) | AWS Local Zones·Outposts·운영 DR |
 | [Cisco ISE RADIUS 권고](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ise-RADIUS-dos-wR3hYPMw), 2026-09-16 | RADIUS의 기본 인증·거부가 정확히 작동하는가? | [06 AAA/RADIUS](../labs/06-aaa-radius/README.md): Accept 1·Reject 2 [증적](../labs/06-aaa-radius/evidence/2026-09-22.txt) | 권고의 취약점·서비스 거부·ISE |
 | [Google Agent 보안 글](https://cloud.google.com/blog/topics/systems/using-ai-agents-to-secure-google-infrastructure/), 2026-09-18 | 도구 호출의 권한·통신·비용 경계를 강제할 수 있는가? | [07 AI Agent Security](../labs/07-ai-agent-security/README.md): 결정적 게이트의 허용·거부 [증적](../labs/07-ai-agent-security/evidence/2026-09-22.json) | 실제 LLM Agent·사람 승인 |

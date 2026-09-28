@@ -1,0 +1,132 @@
+{
+  "tested_at": "2026-09-28T01:38:42.930258+00:00",
+  "scope": "local-policy-evaluation-only",
+  "input_sha256": {
+    "caller": "872c1cad4a49129e99023133a699a7bf4f032326434b1538b33a2ad530bcdc47",
+    "trust": "991c96d60546ced5ff1059c2a5d0db468e0ba3e06763f2569b77de8bc77e463c",
+    "role": "a953d520b87d94abb894689c1bffef41b655f8aad6e59e057675a22bf36a0eb0",
+    "session": "71d66f586d78608f2b2d07d239500a09ed687977aeb8f93ba9e90dcee6a4a5e7",
+    "scenarios": "6dcca98c9babff668857ac1feee5c3164a7dd7ed04107c3e1f8c931e3128349d"
+  },
+  "results": [
+    {
+      "name": "named-caller-can-request-role",
+      "type": "assume_role",
+      "allowed": true,
+      "expected_allowed": true,
+      "caller_policy": "allow",
+      "caller_policy_sids": [
+        "DelegateOnlyLabRole"
+      ],
+      "trust_policy_sids": [
+        "OnlyNamedLabCaller"
+      ],
+      "passed": true
+    },
+    {
+      "name": "untrusted-caller-is-rejected",
+      "type": "assume_role",
+      "allowed": false,
+      "expected_allowed": false,
+      "caller_policy": "allow",
+      "caller_policy_sids": [
+        "DelegateOnlyLabRole"
+      ],
+      "trust_policy_sids": [],
+      "passed": true
+    },
+    {
+      "name": "session-can-list-synthetic-bucket",
+      "type": "session_action",
+      "action": "s3:ListBucket",
+      "resource": "arn:aws:s3:::lab-synthetic-artifacts",
+      "allowed": true,
+      "expected_allowed": true,
+      "role_decision": "allow",
+      "role_policy_sids": [
+        "ReadOnlySyntheticBucket"
+      ],
+      "session_decision": "allow",
+      "session_policy_sids": [
+        "LimitToListOnly"
+      ],
+      "final_decision": "allow",
+      "passed": true
+    },
+    {
+      "name": "session-boundary-blocks-object-read",
+      "type": "session_action",
+      "action": "s3:GetObject",
+      "resource": "arn:aws:s3:::lab-synthetic-artifacts/report.txt",
+      "allowed": false,
+      "expected_allowed": false,
+      "role_decision": "allow",
+      "role_policy_sids": [
+        "ReadOnlySyntheticObjects"
+      ],
+      "session_decision": "implicit_deny",
+      "session_policy_sids": [],
+      "final_decision": "implicit_deny",
+      "passed": true
+    },
+    {
+      "name": "explicit-deny-blocks-object-write",
+      "type": "session_action",
+      "action": "s3:PutObject",
+      "resource": "arn:aws:s3:::lab-synthetic-artifacts/report.txt",
+      "allowed": false,
+      "expected_allowed": false,
+      "role_decision": "explicit_deny",
+      "role_policy_sids": [
+        "NoBucketWrites"
+      ],
+      "session_decision": "implicit_deny",
+      "session_policy_sids": [],
+      "final_decision": "explicit_deny",
+      "passed": true
+    },
+    {
+      "name": "explicit-deny-blocks-object-delete",
+      "type": "session_action",
+      "action": "s3:DeleteObject",
+      "resource": "arn:aws:s3:::lab-synthetic-artifacts/report.txt",
+      "allowed": false,
+      "expected_allowed": false,
+      "role_decision": "explicit_deny",
+      "role_policy_sids": [
+        "NoBucketWrites"
+      ],
+      "session_decision": "implicit_deny",
+      "session_policy_sids": [],
+      "final_decision": "explicit_deny",
+      "passed": true
+    },
+    {
+      "name": "unlisted-account-action-is-denied",
+      "type": "session_action",
+      "action": "s3:ListAllMyBuckets",
+      "resource": "*",
+      "allowed": false,
+      "expected_allowed": false,
+      "role_decision": "implicit_deny",
+      "role_policy_sids": [],
+      "session_decision": "implicit_deny",
+      "session_policy_sids": [],
+      "final_decision": "implicit_deny",
+      "passed": true
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "allowed": 2,
+    "denied": 5,
+    "passed": 7
+  },
+  "status": "passed",
+  "not_validated": [
+    "AWS or Azure runtime",
+    "STS token issuance and expiration",
+    "credential compromise or rotation",
+    "Azure resource locks"
+  ]
+}
