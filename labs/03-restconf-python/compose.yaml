@@ -1,0 +1,22 @@
+services:
+  device:
+    build:
+      context: .
+    environment:
+      IOSXE_MOCK_USER: iosxe
+      IOSXE_MOCK_PASSWORD: ${IOSXE_MOCK_PASSWORD-}
+    networks:
+      - lab
+
+  runner:
+    build:
+      context: .
+    entrypoint: ["/bin/sh", "-c", "sleep infinity"]
+    volumes:
+      - ./compare.py:/lab/compare.py:ro
+    networks:
+      - lab
+
+networks:
+  lab:
+    internal: true

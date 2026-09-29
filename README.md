@@ -13,8 +13,8 @@
 | 구분 | 수량 | 의미 |
 |---|---:|---|
 | 전체 실습 | 12 | 뉴스에서 도출한 독립 기술 질문 |
-| 로컬 검증 | 10 | 코드·컨테이너·합성 모델에서 직접 실행하고 증적 저장 |
-| 설계 | 2 | 구성과 제한된 접근 결과만 있으며 실제 플랫폼 검증 대기 |
+| 로컬 검증 | 12 | 코드·컨테이너·합성 모델에서 직접 실행하고 증적 저장 |
+| 설계 | 0 | 실행 증적 없이 설계만 남은 실습 없음 |
 | 실제 운영 검증 | 0 | 운영·고객 환경 성과를 주장하지 않음 |
 
 ## 실습 카탈로그
@@ -33,10 +33,10 @@
 
 | 실습 | 상태 | 확인한 결과 |
 |---|---|---|
-| [03 RESTCONF/Python](labs/03-restconf-python/README.md) | 설계 | 읽기 전용 코드와 공개 샌드박스 HTTP 401; API·CLI 대조 대기 |
+| [03 RESTCONF/Python](labs/03-restconf-python/README.md) | 로컬 검증 | 합성 장비 RESTCONF·SSH CLI 인터페이스 3개 일치, 인증 실패 거부 |
 | [04 IAM/STS](labs/04-iam-sts/README.md) | 로컬 검증 | 신뢰 관계·세션 축소·명시적 거부 7개 정책 판정; AWS/Azure 런타임 대기 |
 | [05 Backup & Recovery](labs/05-backup-recovery/README.md) | 로컬 검증 | 합성 서비스 RTO 1.627초, 손실 2건 |
-| [12 AI Multi-Region Data Path](labs/12-ai-multiregion-data-path/README.md) | 설계 | Qumulo Hub·Spoke, VPC Peering, NFS, Cache 관계 정리; AWS 런타임 대기 |
+| [12 AI Multi-Region Data Path](labs/12-ai-multiregion-data-path/README.md) | 로컬 검증 | Cold Miss 8건, Warm Hit 8건, Hub 재요청 0건, Cache 훼손 감지 |
 
 ### Security & Operations
 

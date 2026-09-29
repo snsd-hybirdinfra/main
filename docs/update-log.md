@@ -84,6 +84,14 @@
 - 기존 IAM/STS 랩의 다음 단계에 실제 AssumeRole, 허용·거부 API, CloudTrail 감사 확인을 명시했다.
 - 전체 상태는 기존 랩 통합 후 로컬 검증 10개·설계 2개다.
 
+## 2026-09-29 — 설계 상태 실습을 로컬 실행으로 전환
+
+- [03 RESTCONF/Python](../labs/03-restconf-python/README.md)에 합성 HTTPS RESTCONF와 SSH CLI 장비를 추가했다. 인터페이스 3개 상태가 모두 일치했고 잘못된 비밀번호는 HTTP 401과 종료 코드 2로 거부됐다.
+- 기존 공개 샌드박스 HTTP 401 증적은 남겼다. 이번 통과는 실제 IOS XE 장비 결과가 아니라 합성 장비에서 비교 로직을 끝까지 실행한 결과다.
+- [12 AI Multi-Region Data Path](../labs/12-ai-multiregion-data-path/README.md)에서 4 MiB 합성 Dataset을 사용해 Cold Miss 8건, Warm Hit 8건, Warm Hub 요청 0건과 Cache 훼손 감지를 확인했다.
+- 60 ms는 실제 WAN 측정값이 아니라 Cold Fetch마다 넣은 지연 모델이다. AWS·Qumulo·HyperPod와 NFS는 실행하지 않았다.
+- 전체 상태를 로컬 검증 12개·설계 0개로 갱신했다.
+
 ## 이후 갱신 양식
 
 ### YYYY-MM-DD

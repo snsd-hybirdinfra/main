@@ -64,7 +64,7 @@ HA, 백업, 복원, 재구축, RTO/RPO를 분리해 봅니다. 현재 개인 프
 
 [AWS의 HyperPod·Qumulo 글](https://aws.amazon.com/blogs/machine-learning/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/)(2026-09-25)은 GPU Compute와 원본 Dataset이 다른 Region에 있을 때 전체 복제와 반복 WAN 읽기 사이의 선택을 다룹니다. Hub 원본, Region 간 VPC Peering, Spoke의 예측 Cache, 로컬 NFS Mount를 함께 설계하면 데이터 이동 비용과 GPU 대기 시간을 분리해 볼 수 있습니다.
 
-**실습 연결:** 기사 구조와 측정 지표를 한 장으로 정리했지만 AWS·Qumulo·HyperPod는 실행하지 않았습니다. 기사에 나온 처리량과 Cache Hit Rate를 내 결과로 사용하지 않습니다.
+**실습 연결:** 기사 구조를 로컬 Hub·Spoke 디렉터리로 줄여 Cold Miss 8건, Warm Hit 8건, Warm Hub 요청 0건과 Cache 훼손 감지를 확인했습니다. AWS·Qumulo·HyperPod는 실행하지 않았으며 기사 처리량과 Cache Hit Rate를 내 결과로 사용하지 않습니다.
 
 ## 새 브리핑을 반영하는 기준
 

@@ -30,7 +30,7 @@
 | main 실습 | 서브 프로젝트에서 연결되는 문제 | 적용 상태 |
 |---|---|---|
 | 01 BGP/ECMP, 02 EVPN/VXLAN | 금융 네트워크 언더레이의 경로 이중화와 세그멘테이션 | 독립 실습 완료, 서브 프로젝트 Network Fabric은 `DESIGN_ONLY` |
-| 03 RESTCONF/Python | 장비 상태 수집과 운영 자동화 | 설계; 실제 장비 API·CLI 대조 대기 |
+| 03 RESTCONF/Python | 장비 상태 수집과 운영 자동화 | 합성 RESTCONF·SSH CLI 로컬 검증; 실제 장비 대조 대기 |
 | 04 IAM/STS | 향후 퍼블릭 클라우드 어댑터와 Agent Workload Identity | 합성 정책 판정 로컬 검증; 실제 STS/Azure와 어댑터는 `DEFERRED` |
 | 05 Backup & Recovery | 플랫폼 수명주기와 복구 증적 | 합성 서비스 로컬 검증; 통합 복구는 `PARTIAL` |
 | 06 AAA/RADIUS | 관리망 접근 제어 | 독립 로컬 검증; 금융망 적용 미검증 |
@@ -39,7 +39,7 @@
 | 09 Edge Load Balancer HA | 포털·서비스 경계의 관리 접근 분리와 가용성 | Nginx·OpenSSH 합성 검증; 플랫폼·실제 경계 장비 통합 미검증 |
 | 10 Network Digital Twin | 변경 전 경로·정책 의도 검증 | 합성 모델 검증; 실제 장비 수집 미검증 |
 | 11 Vulnerability Prioritization | 네트워크·플랫폼 자산의 패치 우선순위 | 합성 인벤토리 검증; 실제 CMDB·버전·패치 미검증 |
-| 12 AI Multi-Region Data Path | 향후 GPU Compute와 Dataset 배치 판단 | 설계만 정리; Public Cloud Adapter가 `DEFERRED`라 실제 AWS·Qumulo·HyperPod 미검증 |
+| 12 AI Multi-Region Data Path | 향후 GPU Compute와 Dataset 배치 판단 | 로컬 파일 Cache 검증; Public Cloud Adapter가 `DEFERRED`라 실제 AWS·Qumulo·HyperPod 미검증 |
 
 ## 승격 조건
 

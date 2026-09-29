@@ -109,6 +109,8 @@ def main():
     parser.add_argument("--ca-bundle", help="Trusted CA bundle for RESTCONF TLS")
     parser.add_argument("--sandbox-insecure-tls", action="store_true",
                         help="Allow the named Cisco public sandbox's mismatched self-signed certificate")
+    parser.add_argument("--local-insecure-tls", action="store_true",
+                        help="Allow the lab's self-signed certificate for a local synthetic device only")
     args = parser.parse_args()
     if not re.fullmatch(r"[A-Za-z0-9.-]+", args.host):
         parser.error("host must be a DNS name or IPv4 address")
@@ -117,11 +119,16 @@ def main():
         "sandbox-iosxe-recomm-1.cisco.com",
     ):
         parser.error("--sandbox-insecure-tls is limited to the two named Cisco public sandboxes")
+    if args.local_insecure_tls and args.host not in ("device", "localhost", "127.0.0.1"):
+        parser.error("--local-insecure-tls is limited to the local synthetic lab")
+    if args.sandbox_insecure_tls and args.local_insecure_tls:
+        parser.error("choose one TLS exception mode")
     user = os.getenv("IOSXE_USER")
     password = os.getenv("IOSXE_PASSWORD")
     if not user or not password:
         parser.error("set IOSXE_USER and IOSXE_PASSWORD in the environment")
-    context = (ssl._create_unverified_context() if args.sandbox_insecure_tls
+    context = (ssl._create_unverified_context()
+               if args.sandbox_insecure_tls or args.local_insecure_tls
                else ssl.create_default_context(cafile=args.ca_bundle))
     try:
         payload = fetch_restconf(args.host, args.rest_port, user, password, context)
@@ -131,6 +138,8 @@ def main():
         result["collected_at_utc"] = datetime.now(timezone.utc).isoformat()
         result["host"] = args.host
         result["restconf_endpoint"] = ENDPOINT
+        result["validation_scope"] = ("local-synthetic-device"
+                                      if args.local_insecure_tls else "external-device")
         result["status"] = ("pass" if result["compared"] and not result["mismatches"]
                             else "inconclusive" if not result["compared"] else "fail")
         print(json.dumps(result, ensure_ascii=False, indent=2))

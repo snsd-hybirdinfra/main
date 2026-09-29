@@ -1,0 +1,55 @@
+{
+  "tested_at": "2026-09-29T02:20:02.751018+00:00",
+  "scope": "local-filesystem-hub-spoke-cache-emulation",
+  "source": {
+    "article": "https://aws.amazon.com/blogs/machine-learning/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/",
+    "published": "2026-09-25"
+  },
+  "environment": {
+    "runtime": "local Python filesystem experiment",
+    "dataset_files": 8,
+    "file_size_kib": 512,
+    "dataset_mib": 4.0,
+    "modeled_latency_ms_per_cold_fetch": 60.0
+  },
+  "cold_epoch": {
+    "duration_ms": 914.811,
+    "throughput_mib_s": 4.372,
+    "cache_hits": 0,
+    "cache_misses": 8,
+    "cache_hit_rate": 0.0,
+    "origin_requests": 8,
+    "origin_bytes": 4194304,
+    "verified_hashes": 8,
+    "total_files": 8
+  },
+  "warm_epoch": {
+    "duration_ms": 7.606,
+    "throughput_mib_s": 525.914,
+    "cache_hits": 8,
+    "cache_misses": 0,
+    "cache_hit_rate": 1.0,
+    "origin_requests": 0,
+    "origin_bytes": 0,
+    "verified_hashes": 8,
+    "total_files": 8
+  },
+  "failure_path": {
+    "corrupted_file": "shard-00.bin",
+    "integrity_failure_detected": true
+  },
+  "assertions": {
+    "cold_epoch_fetches_every_file_from_hub": true,
+    "warm_epoch_reads_every_file_from_cache": true,
+    "all_cold_and_warm_hashes_match": true,
+    "warm_epoch_is_faster_than_cold_epoch": true,
+    "cache_corruption_is_detected": true
+  },
+  "passed": true,
+  "not_validated": [
+    "AWS Regions, VPC Peering, route tables, or security groups",
+    "Qumulo Hub, Spoke, Cloud Data Fabric, or NVMe cache",
+    "NFS TCP 2049 or SageMaker HyperPod",
+    "Actual WAN latency, cache prefetch, GPU utilization, throughput, or cost"
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "tested_at": "2026-09-29T02:20:07.5918635Z",
+  "scope": "local-synthetic-iosxe-restconf-and-ssh-cli",
+  "source": "Nokia automation announcement, 2026-09-17",
+  "environment": {
+    "runtime": "Docker Desktop",
+    "restconf": "HTTPS read-only synthetic IOS XE endpoint",
+    "cli": "SSH read-only synthetic IOS XE shell"
+  },
+  "comparison": {
+    "api_count": 3,
+    "cli_count": 3,
+    "compared": 3,
+    "mismatches": 0,
+    "api_only": [],
+    "cli_only": [],
+    "rows": [
+      {
+        "name": "GigabitEthernet1",
+        "api": {
+          "admin": "up",
+          "oper": "up"
+        },
+        "cli": {
+          "admin": "up",
+          "oper": "up"
+        },
+        "match": true
+      },
+      {
+        "name": "GigabitEthernet2",
+        "api": {
+          "admin": "down",
+          "oper": "down"
+        },
+        "cli": {
+          "admin": "down",
+          "oper": "down"
+        },
+        "match": true
+      },
+      {
+        "name": "Loopback0",
+        "api": {
+          "admin": "up",
+          "oper": "up"
+        },
+        "cli": {
+          "admin": "up",
+          "oper": "up"
+        },
+        "match": true
+      }
+    ],
+    "host": "device",
+    "restconf_endpoint": "/restconf/data/Cisco-IOS-XE-interfaces-oper:interfaces",
+    "validation_scope": "local-synthetic-device",
+    "status": "pass",
+    "collected_at_utc": "2026-09-29T02:20:06.9342460+00:00"
+  },
+  "denied_path": {
+    "invalid_password_exit_code": 2,
+    "message": "RESTCONF HTTP 401; comparison not run."
+  },
+  "assertions": {
+    "restconf_and_cli_collected": true,
+    "common_interfaces_compared": true,
+    "statuses_match": true,
+    "no_one_sided_interfaces": true,
+    "invalid_credentials_rejected": true
+  },
+  "passed": true,
+  "not_validated": [
+    "Cisco IOS XE or Nokia/Microsoft products",
+    "A physical or virtual network device",
+    "Production certificate trust, AAA, configuration writes, or telemetry",
+    "API and CLI collection against a changing live device"
+  ]
+}

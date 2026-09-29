@@ -1,0 +1,21 @@
+{
+  "Cisco-IOS-XE-interfaces-oper:interfaces": {
+    "interface": [
+      {
+        "name": "GigabitEthernet1",
+        "admin-status": "if-state-up",
+        "oper-status": "if-oper-state-ready"
+      },
+      {
+        "name": "GigabitEthernet2",
+        "admin-status": "if-state-down",
+        "oper-status": "if-oper-state-down"
+      },
+      {
+        "name": "Loopback0",
+        "admin-status": "if-state-up",
+        "oper-status": "if-oper-state-ready"
+      }
+    ]
+  }
+}

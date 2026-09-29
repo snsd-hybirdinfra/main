@@ -1,0 +1,7 @@
+*
+!Dockerfile
+!device-entrypoint.sh
+!mock-cli.sh
+!device_server.py
+!fixtures/
+!fixtures/**

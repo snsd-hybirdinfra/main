@@ -1,0 +1,6 @@
+GigabitEthernet1 is up, line protocol is up
+  Hardware is Synthetic Ethernet, address is 0000.0000.0001
+GigabitEthernet2 is administratively down, line protocol is down
+  Hardware is Synthetic Ethernet, address is 0000.0000.0002
+Loopback0 is up, line protocol is up
+  Hardware is Loopback
