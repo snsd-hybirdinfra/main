@@ -1,0 +1,44 @@
+EVPN/VXLAN lab: two FRR leaves, VNI 100 and 200, direct isolated veth underlay
+=== EVPN peering and VNI discovery ===
+BGP router identifier 10.255.1.1, local AS number 65200 VRF default vrf-id 0
+BGP table version 0
+RIB entries 4, using 640 bytes of memory
+Peers 1, using 23 KiB of memory
+
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+10.202.0.2      4      65200        10        11        2    0    0 00:00:07            3        3 N/A
+
+Total number of neighbors 1
+VNI        Type VxLAN IF              # MACs   # ARPs   # Remote VTEPs  Tenant VRF      VLAN       BRIDGE
+200        L2   vx200                 0        0        1               default         1          br200
+100        L2   vx100                 2        0        1               default         1          br100
+b6:29:c1:d4:82:96 vlan 1 extern_learn master br100
+b6:29:c1:d4:82:96 extern_learn master br100
+d6:bb:1f:c0:b6:8a vlan 1 master br100 permanent
+d6:bb:1f:c0:b6:8a master br100 permanent
+b6:29:c1:d4:82:96 dst 10.255.1.2 self extern_learn
+00:00:00:00:00:00 dst 10.255.1.2 self permanent
+=== VNI 100: Host1 -> Host2 ===
+PING 192.0.2.12 (192.0.2.12): 56 data bytes
+64 bytes from 192.0.2.12: seq=0 ttl=64 time=0.102 ms
+64 bytes from 192.0.2.12: seq=1 ttl=64 time=0.085 ms
+64 bytes from 192.0.2.12: seq=2 ttl=64 time=0.107 ms
+
+--- 192.0.2.12 ping statistics ---
+3 packets transmitted, 3 packets received, 0% packet loss
+round-trip min/avg/max = 0.085/0.098/0.107 ms
+=== VNI 200: Host3 -> Host4 ===
+PING 192.0.2.14 (192.0.2.14): 56 data bytes
+64 bytes from 192.0.2.14: seq=0 ttl=64 time=0.273 ms
+64 bytes from 192.0.2.14: seq=1 ttl=64 time=0.122 ms
+64 bytes from 192.0.2.14: seq=2 ttl=64 time=0.101 ms
+
+--- 192.0.2.14 ping statistics ---
+3 packets transmitted, 3 packets received, 0% packet loss
+round-trip min/avg/max = 0.101/0.165/0.273 ms
+=== Isolation: Host1 must not reach Host3 across VNI 100/200 ===
+PING 192.0.2.13 (192.0.2.13): 56 data bytes
+
+--- 192.0.2.13 ping statistics ---
+2 packets transmitted, 0 packets received, 100% packet loss
+PASS: both VNIs connect their own hosts; cross-VNI ping is denied

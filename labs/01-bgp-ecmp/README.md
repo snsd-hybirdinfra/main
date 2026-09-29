@@ -4,7 +4,7 @@
 
 [Cisco의 AI 네트워크 글(2026-09-21)](https://blogs.cisco.com/news/the-ai-era-demands-more-than-speed-building-secure-intelligent-networks-from-silicon-to-optics)을 읽다가 복원력이라는 말을 실제 경로로 확인해 보고 싶었다. 내가 잡은 질문은 단순했다. **Spine 하나가 멈춰도 Leaf 사이 통신이 계속될까?** 기사에 나온 상용망을 흉내 내기보다 FRR로 가장 작은 BGP/ECMP 토폴로지를 직접 만들었다.
 
-2026-09-22에 WSL2 Ubuntu와 FRR 컨테이너로 직접 실행했다. 경로와 ping은 확인했지만 EVE-NG나 물리 장비에서는 아직 돌리지 않았다.
+2026-09-22 첫 실행 뒤 2026-09-29에 WSL2 Ubuntu와 FRR 컨테이너로 다시 실행했다. 경로와 ping은 확인했지만 EVE-NG나 물리 장비에서는 아직 돌리지 않았다.
 
 ## 확인하려던 것
 
@@ -48,7 +48,7 @@ bash /mnt/f/main/labs/01-bgp-ecmp/run-lab.sh
 
 ## 직접 돌려본 결과
 
-[2026-09-22 실행 출력](evidence/2026-09-22.txt)에서 확인한 값:
+[2026-09-29 재실행 출력](evidence/2026-09-29.txt)에서 확인한 값:
 
 | 단계 | Leaf1의 10.201.102.0/29 경로 | Host1 → Host2 |
 |---|---|---|

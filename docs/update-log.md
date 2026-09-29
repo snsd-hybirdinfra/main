@@ -92,6 +92,14 @@
 - 60 ms는 실제 WAN 측정값이 아니라 Cold Fetch마다 넣은 지연 모델이다. AWS·Qumulo·HyperPod와 NFS는 실행하지 않았다.
 - 전체 상태를 로컬 검증 12개·설계 0개로 갱신했다.
 
+## 2026-09-29 — FRR 구성 경고 제거 후 재실행
+
+- 01 BGP/ECMP와 02 EVPN/VXLAN의 첫 증적에는 결과가 통과했어도 vtysh.conf 누락에 따른 FRR 구성 처리 경고가 함께 찍혀 있었다.
+- 두 FRR 이미지에 빈 vtysh.conf와 올바른 소유권을 추가하고 WSL2에서 다시 실행했다.
+- BGP/ECMP는 정상 2경로, Spine1 중단 후 1경로와 ping 3/3, 복구 후 2경로와 ping 3/3을 경고 없이 확인했다.
+- EVPN/VXLAN은 VNI 100·200 각각 ping 3/3과 VNI 간 ping 0/2를 경고 없이 확인했다.
+- 기존 2026-09-22 출력은 지우지 않고 새 [BGP/ECMP 증적](../labs/01-bgp-ecmp/evidence/2026-09-29.txt)과 [EVPN/VXLAN 증적](../labs/02-evpn-vxlan/evidence/2026-09-29.txt)을 추가했다.
+
 ## 이후 갱신 양식
 
 ### YYYY-MM-DD

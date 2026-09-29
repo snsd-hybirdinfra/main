@@ -2,4 +2,4 @@ FROM quay.io/frrouting/frr@sha256:65e5967b922572c0565d968388fb06af69d7e9b3b3eea4
 ARG ROUTER
 COPY daemons /etc/frr/daemons
 COPY configs/$ROUTER/frr.conf /etc/frr/frr.conf
-RUN chown frr:frr /etc/frr/frr.conf && chmod 640 /etc/frr/frr.conf && chmod 644 /etc/frr/daemons
+RUN touch /etc/frr/vtysh.conf && chown frr:frr /etc/frr/frr.conf /etc/frr/vtysh.conf && chmod 640 /etc/frr/frr.conf /etc/frr/vtysh.conf && chmod 644 /etc/frr/daemons

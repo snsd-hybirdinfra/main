@@ -4,7 +4,7 @@
 
 [Cisco의 AI 네트워크 글(2026-09-21)](https://blogs.cisco.com/news/the-ai-era-demands-more-than-speed-building-secure-intelligent-networks-from-silicon-to-optics)을 보고 ECMP 다음 단계로 세그먼트 분리를 확인해 보기로 했다. **같은 VNI끼리는 통신하고 다른 VNI끼리는 실제로 분리되는가?**를 FRR과 Linux VXLAN으로 시험했다. 이 토폴로지는 기사 예제가 아니라 내가 만든 축소 환경이다.
 
-2026-09-22에 WSL2의 FRR 컨테이너 두 대로 L2VNI까지 확인했다. 2-Spine Underlay와 L3VNI는 이번 실행에 넣지 않았다.
+2026-09-22 첫 실행 뒤 2026-09-29에 WSL2의 FRR 컨테이너 두 대로 L2VNI를 다시 확인했다. 2-Spine Underlay와 L3VNI는 이번 실행에 넣지 않았다.
 
 ## 확인하려던 것
 
@@ -37,7 +37,7 @@ bash /mnt/f/main/labs/02-evpn-vxlan/run-lab.sh
 
 ## 직접 돌려본 결과
 
-[2026-09-22 실행 출력](evidence/2026-09-22.txt):
+[2026-09-29 재실행 출력](evidence/2026-09-29.txt):
 
 | 확인 항목 | 관측 결과 |
 |---|---|

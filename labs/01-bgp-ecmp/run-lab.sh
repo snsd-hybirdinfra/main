@@ -2,7 +2,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 mkdir -p evidence
-exec > >(tee evidence/2026-09-22.txt) 2>&1
+exec > >(sed -u 's/[[:space:]]*$//' | tee evidence/2026-09-29.txt) 2>&1
 cleanup() {
   docker compose down --remove-orphans >/dev/null 2>&1 || true
 }

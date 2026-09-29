@@ -6,8 +6,8 @@
 
 | 순서 | 주제 | 직접 확인할 질문 | 남길 증적 |
 |---|---|---|---|
-| 1 | [BGP/ECMP Spine-Leaf](../labs/01-bgp-ecmp/README.md) — 로컬 검증 | 링크 또는 Spine 장애 후 경로가 수렴하고 통신이 유지되는가? | [설정과 실행 출력](../labs/01-bgp-ecmp/evidence/2026-09-22.txt), 장애 전후 경로·ping |
-| 2 | [EVPN/VXLAN](../labs/02-evpn-vxlan/README.md) — 로컬 검증 | 분리된 세그먼트의 허용·거부 통신이 의도대로 동작하는가? | [BGP EVPN·VNI·FDB 및 ping 출력](../labs/02-evpn-vxlan/evidence/2026-09-22.txt) |
+| 1 | [BGP/ECMP Spine-Leaf](../labs/01-bgp-ecmp/README.md) — 로컬 검증 | 링크 또는 Spine 장애 후 경로가 수렴하고 통신이 유지되는가? | [설정과 실행 출력](../labs/01-bgp-ecmp/evidence/2026-09-29.txt), 장애 전후 경로·ping |
+| 2 | [EVPN/VXLAN](../labs/02-evpn-vxlan/README.md) — 로컬 검증 | 분리된 세그먼트의 허용·거부 통신이 의도대로 동작하는가? | [BGP EVPN·VNI·FDB 및 ping 출력](../labs/02-evpn-vxlan/evidence/2026-09-29.txt) |
 | 3 | [RESTCONF/Python](../labs/03-restconf-python/README.md) — 로컬 검증 | API 조회 결과가 장비 CLI 상태와 일치하고 인증 실패 시 비교를 멈추는가? | [합성 인터페이스 3개 일치·불일치 0·HTTP 401 거부](../labs/03-restconf-python/evidence/2026-09-29.json); 실제 장비 대기 |
 | 4 | [IAM/STS](../labs/04-iam-sts/README.md) — 로컬 검증 | 신뢰 관계·역할·세션 정책·명시적 거부로 Workload Identity 행동 범위를 줄일 수 있는가? | [합성 정책 판정 7/7 일치](../labs/04-iam-sts/evidence/2026-09-28.json); AWS/Azure 발급·만료·Resource Lock은 미검증 |
 | 5 | [백업·복구](../labs/05-backup-recovery/README.md) — 로컬 검증 | 합성 서비스를 복원하거나 재구축하는 데 얼마나 걸리는가? | [RTO 1.627초·손실 2건](../labs/05-backup-recovery/evidence/2026-09-22.json) |
