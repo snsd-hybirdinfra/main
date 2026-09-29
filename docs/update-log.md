@@ -75,6 +75,15 @@
 - AWS/Azure 런타임, STS 발급·만료, 자격증명 회전, Azure Resource Lock은 검증하지 않았다.
 - 전체 상태를 로컬 검증 10개·설계 1개로 갱신했다.
 
+## 2026-09-29 — Edge 관리망 분리 검증과 AI 데이터 경로 설계
+
+- Citrix의 2026-09-27 NetScaler 보안 공지와 관리·데이터 Plane 분리 문서를 원문으로 확인했다.
+- 중복 랩을 만들지 않고 기존 [09 Edge Load Balancer HA](../labs/09-load-balancer-ha/README.md)에 관리·데이터 Plane 분리를 통합했다. Admin→관리 주소 SSH 성공, 데이터망→SSH 거부, 정상·복구 시 두 백엔드 응답, Web01 중단 중 Web02 8/8를 확인했다.
+- NetScaler 제품·공지 CVE·실제 NSIP/SNIP/VIP·ACL·HA는 실행하지 않았다.
+- AWS의 2026-09-25 HyperPod·Qumulo 글을 바탕으로 [AI Multi-Region Data Path](../labs/12-ai-multiregion-data-path/README.md)를 설계 상태로 추가했다. 기사 수치는 내 측정값으로 기록하지 않았다.
+- 기존 IAM/STS 랩의 다음 단계에 실제 AssumeRole, 허용·거부 API, CloudTrail 감사 확인을 명시했다.
+- 전체 상태는 기존 랩 통합 후 로컬 검증 10개·설계 2개다.
+
 ## 이후 갱신 양식
 
 ### YYYY-MM-DD

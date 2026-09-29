@@ -12,9 +12,9 @@
 
 | 구분 | 수량 | 의미 |
 |---|---:|---|
-| 전체 실습 | 11 | 뉴스에서 도출한 독립 기술 질문 |
+| 전체 실습 | 12 | 뉴스에서 도출한 독립 기술 질문 |
 | 로컬 검증 | 10 | 코드·컨테이너·합성 모델에서 직접 실행하고 증적 저장 |
-| 설계 | 1 | 구성과 제한된 접근 결과만 있으며 실제 플랫폼 검증 대기 |
+| 설계 | 2 | 구성과 제한된 접근 결과만 있으며 실제 플랫폼 검증 대기 |
 | 실제 운영 검증 | 0 | 운영·고객 환경 성과를 주장하지 않음 |
 
 ## 실습 카탈로그
@@ -26,7 +26,7 @@
 | [01 BGP/ECMP](labs/01-bgp-ecmp/README.md) | 로컬 검증 | 정상 경로 2개, Spine 장애 후 대체 경로 1개와 ping 3/3 |
 | [02 EVPN/VXLAN](labs/02-evpn-vxlan/README.md) | 로컬 검증 | VNI 100·200 내부 통신과 VNI 간 격리 |
 | [08 AI DC Network](labs/08-ai-dc-network/README.md) | 로컬 검증 | 20 Mbit/s 가상 병목의 처리량과 부하 중 지연 |
-| [09 Load Balancer HA](labs/09-load-balancer-ha/README.md) | 로컬 검증 | 정상 4:4 분산, 백엔드 장애 중 서비스 유지, 복구 후 재분산 |
+| [09 Edge Load Balancer HA](labs/09-load-balancer-ha/README.md) | 로컬 검증 | 관리망 SSH 허용, 데이터망 SSH 거부, 백엔드 장애 중 HTTP 유지 |
 | [10 Network Digital Twin](labs/10-network-digital-twin/README.md) | 로컬 검증 | 정상 2경로, 단일 장애 1경로, 이중 장애 0경로, 정책 거부 |
 
 ### Cloud & Automation
@@ -36,6 +36,7 @@
 | [03 RESTCONF/Python](labs/03-restconf-python/README.md) | 설계 | 읽기 전용 코드와 공개 샌드박스 HTTP 401; API·CLI 대조 대기 |
 | [04 IAM/STS](labs/04-iam-sts/README.md) | 로컬 검증 | 신뢰 관계·세션 축소·명시적 거부 7개 정책 판정; AWS/Azure 런타임 대기 |
 | [05 Backup & Recovery](labs/05-backup-recovery/README.md) | 로컬 검증 | 합성 서비스 RTO 1.627초, 손실 2건 |
+| [12 AI Multi-Region Data Path](labs/12-ai-multiregion-data-path/README.md) | 설계 | Qumulo Hub·Spoke, VPC Peering, NFS, Cache 관계 정리; AWS 런타임 대기 |
 
 ### Security & Operations
 

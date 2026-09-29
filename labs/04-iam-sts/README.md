@@ -64,9 +64,10 @@ python .\evaluate_policy.py --directory . --evidence .\evidence\2026-09-28.json
 ## 다음에 실제 계정에서 해볼 순서
 
 1. 격리된 실습 계정에 빈 버킷과 호출자·대상 역할을 만든다.
-2. 900초 세션 정책으로 `AssumeRole`을 호출하고 만료 시각만 기록한다.
-3. 범위 안의 조회는 성공하고, 범위 밖 조회와 쓰기·삭제는 실패하는지 확인한다.
-4. 세션 만료 후 `ExpiredToken`을 확인한다.
-5. 역할과 버킷을 지우고 결정 결과와 오류 코드만 정리해 남긴다.
+2. 900초 세션 정책으로 `AssumeRole`을 호출하고 `get-caller-identity`와 만료 시각을 기록한다.
+3. 허용한 `ListBucket`·`GetObject`는 성공하고 `DeleteObject`·`DeleteBucket`은 명시적 거부되는지 확인한다.
+4. CloudTrail에서 같은 세션의 `userIdentity`, `eventName`, `eventTime`과 거부 오류를 대조한다.
+5. 세션 만료 후 `ExpiredToken`을 확인한다.
+6. 역할과 버킷을 지우고 결정 결과와 오류 코드만 정리해 남긴다.
 
 이 흐름은 나중에 `snsd-multicloud-ops`의 Public Cloud Adapter와 Agent Workload Identity를 붙일 때 다시 사용할 생각이다. 현재 그 어댑터는 `DEFERRED` 상태라서 이번 결과를 서브 프로젝트 구현 증거로 포함하지 않았다.

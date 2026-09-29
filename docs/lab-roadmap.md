@@ -2,7 +2,7 @@
 
 각 주제를 선택한 뉴스 원문, 내가 도출한 질문, 실제 증적과 한계는 [뉴스 → 기술 실습 기록](news-to-labs.md)에 있습니다.
 
-상태 표기는 `계획`, `설계`, `로컬 검증`, `런타임 검증`을 사용합니다. 현재 11개 실습 중 10개는 컨테이너·코드·합성 모델에서 **로컬 검증**, RESTCONF/Python 1개는 **설계** 상태입니다. 실제 운영 환경에서 검증한 실습은 없습니다.
+상태 표기는 `계획`, `설계`, `로컬 검증`, `런타임 검증`을 사용합니다. 현재 12개 실습 중 10개는 컨테이너·코드·합성 모델에서 **로컬 검증**, RESTCONF/Python과 AI Multi-Region Data Path 2개는 **설계** 상태입니다. 실제 운영 환경에서 검증한 실습은 없습니다.
 
 | 순서 | 주제 | 직접 확인할 질문 | 남길 증적 |
 |---|---|---|---|
@@ -14,9 +14,10 @@
 | 6 | [AAA/RADIUS](../labs/06-aaa-radius/README.md) — 로컬 검증 | 등록된 사용자만 RADIUS 인증을 통과하는가? | [Access-Accept 1건·Access-Reject 2건](../labs/06-aaa-radius/evidence/2026-09-22.txt) |
 | 7 | [AI Agent Security](../labs/07-ai-agent-security/README.md) — 로컬 검증 | 도구의 권한·통신·예산·합성 승인 경계가 지켜지는가? | [결정적 게이트 실행 결과](../labs/07-ai-agent-security/evidence/2026-09-22.json); 실제 Agent 런타임 대기 |
 | 8 | [AI DC Network](../labs/08-ai-dc-network/README.md) — 로컬 검증 | 공유 병목에서 TCP 처리량과 지연이 어떻게 바뀌는가? | [20 Mbit/s 가상 링크 측정](../labs/08-ai-dc-network/evidence/2026-09-22.json); RoCE/ECN/PFC는 미검증 |
-| 9 | [Load Balancer HA](../labs/09-load-balancer-ha/README.md) — 로컬 검증 | 백엔드 하나가 중단돼도 서비스가 유지되고 복구 후 다시 풀에 참여하는가? | [정상 4:4·장애 중 web02 8/8·복구 4:4](../labs/09-load-balancer-ha/evidence/2026-09-24.json); F5/CVE는 미검증 |
+| 9 | [Edge Load Balancer HA](../labs/09-load-balancer-ha/README.md) — 로컬 검증 | 관리 서비스를 사용자 트래픽과 분리하면서 백엔드 장애에도 HTTP를 유지할 수 있는가? | [관리 SSH 허용·데이터 SSH 거부·정상/장애/복구 HTTP](../labs/09-load-balancer-ha/evidence/2026-09-29.json); NetScaler·F5·CVE·실제 HA는 미검증 |
 | 10 | [Network Digital Twin](../labs/10-network-digital-twin/README.md) — 로컬 검증 | 읽기 전용 모델로 애플리케이션 경로·장애 내성·세그멘테이션 의도를 판정할 수 있는가? | [정상 2경로·단일 장애 1경로·이중 장애 0경로·정책 거부](../labs/10-network-digital-twin/evidence/2026-09-26.json); 실제 장비/IP Fabric은 미검증 |
 | 11 | [Vulnerability Prioritization](../labs/11-vulnerability-prioritization/README.md) — 로컬 검증 | KEV·노출·중요도·관리 Plane·기한을 합쳐 조치 순서를 일관되게 판정할 수 있는가? | [P0 2건·P2 1건·P3 2건과 입력 일치 검사](../labs/11-vulnerability-prioritization/evidence/2026-09-27.json); 실제 자산·패치는 미검증 |
+| 12 | [AI Multi-Region Data Path](../labs/12-ai-multiregion-data-path/README.md) — 설계 | Hub 원본과 Spoke Cache로 복제 부담과 WAN 지연을 어떻게 나눌 수 있는가? | 아키텍처와 측정 항목만 정리; AWS·Qumulo·HyperPod 실행 증적 대기 |
 
 ## 실습 README 공통 양식
 

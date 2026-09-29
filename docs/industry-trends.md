@@ -38,9 +38,9 @@ HA, 백업, 복원, 재구축, RTO/RPO를 분리해 봅니다. 현재 개인 프
 
 ## 7. 서비스 경계의 가용성과 취약점 우선순위
 
-9월 23일 브리핑의 [F5 BIG-IP APM 권고](https://my.f5.com/manage/s/article/K000162605)와 [CISA KEV 공지](https://www.cisa.gov/news-events/alerts/2026/09/22/cisa-adds-four-known-exploited-vulnerabilities-catalog)는 로드밸런서·접근 제어 장비가 트래픽과 인증의 공통 경계임을 보여 줍니다. 패치는 KEV, 실제 악용, 외부 노출, 자산 중요도를 함께 보고 우선순위를 정합니다.
+9월 브리핑의 [F5 BIG-IP APM 권고](https://my.f5.com/manage/s/article/K000162605), [CISA KEV 공지](https://www.cisa.gov/news-events/alerts/2026/09/22/cisa-adds-four-known-exploited-vulnerabilities-catalog), [Citrix NetScaler 보안 공지](https://support.citrix.com/external/article/CTX697096)(2026-09-27)는 로드밸런서·VPN·접근 제어 장비가 트래픽과 인증의 공통 경계임을 보여 줍니다. 패치 우선순위뿐 아니라 관리 Plane 노출과 장애 시 서비스 경로도 함께 봐야 합니다.
 
-**실습 연결:** CVE나 F5 제품을 재현하지 않고, 먼저 Nginx 로드밸런서에서 백엔드 장애·재시도·복구 후 재편입을 측정했습니다.
+**실습 연결:** 제품과 CVE를 재현하지 않고 Nginx 로드밸런서의 장애·복구를 먼저 측정했습니다. 이어서 관리망과 데이터망을 분리하고 관리 SSH 허용·데이터망 SSH 거부·백엔드 장애 중 HTTP 유지를 컨테이너에서 확인했습니다.
 
 ## 8. 애플리케이션 관점의 Network Digital Twin
 
@@ -59,6 +59,12 @@ HA, 백업, 복원, 재구축, RTO/RPO를 분리해 봅니다. 현재 개인 프
 9월 28일 브리핑의 [Microsoft Storm-3168 분석](https://www.microsoft.com/en-us/security/blog/2026/09/25/storm-3168-agentic-driven-cloud-attacks-using-compromised-service-principals/)은 탈취된 Service Principal이 짧은 시간에 대량 삭제를 시도했고, 일부 Storage는 Resource Lock과 삭제 보호로 차단됐다고 설명합니다. 사람 계정뿐 아니라 Service Principal·IAM Role·Service Account의 최소 권한과 자격증명 수명주기가 클라우드 복원력의 핵심입니다.
 
 **실습 연결:** AWS 형식의 합성 신뢰·역할·세션 정책으로 허용 2건과 거부 5건을 로컬 판정했습니다. Azure Resource Lock과 실제 클라우드 자격증명은 검증하지 않았습니다.
+
+## 11. AI Multi-Region Data Path
+
+[AWS의 HyperPod·Qumulo 글](https://aws.amazon.com/blogs/machine-learning/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/)(2026-09-25)은 GPU Compute와 원본 Dataset이 다른 Region에 있을 때 전체 복제와 반복 WAN 읽기 사이의 선택을 다룹니다. Hub 원본, Region 간 VPC Peering, Spoke의 예측 Cache, 로컬 NFS Mount를 함께 설계하면 데이터 이동 비용과 GPU 대기 시간을 분리해 볼 수 있습니다.
+
+**실습 연결:** 기사 구조와 측정 지표를 한 장으로 정리했지만 AWS·Qumulo·HyperPod는 실행하지 않았습니다. 기사에 나온 처리량과 Cache Hit Rate를 내 결과로 사용하지 않습니다.
 
 ## 새 브리핑을 반영하는 기준
 

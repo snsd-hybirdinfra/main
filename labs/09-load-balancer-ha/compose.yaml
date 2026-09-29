@@ -1,18 +1,63 @@
 services:
-  web01:
-    image: nginx:alpine
-    volumes:
-      - ./web01/index.html:/usr/share/nginx/html/index.html:ro
-  web02:
-    image: nginx:alpine
-    volumes:
-      - ./web02/index.html:/usr/share/nginx/html/index.html:ro
-  lb:
-    image: nginx:alpine
-    ports:
-      - "127.0.0.1:18080:80"
+  edge:
+    build:
+      context: .
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - web01
       - web02
+    networks:
+      management:
+        ipv4_address: 172.31.10.10
+      data:
+        ipv4_address: 172.31.20.10
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://172.31.20.10/ >/dev/null || exit 1"]
+      interval: 1s
+      timeout: 1s
+      retries: 30
+
+  admin:
+    build:
+      context: .
+    entrypoint: ["/bin/sh", "-c", "sleep infinity"]
+    networks:
+      management:
+        ipv4_address: 172.31.10.20
+
+  client:
+    build:
+      context: .
+    entrypoint: ["/bin/sh", "-c", "sleep infinity"]
+    networks:
+      data:
+        ipv4_address: 172.31.20.20
+
+  web01:
+    image: nginx:alpine@sha256:4a73073bd557c65b759505da037898b61f1be6cbcc3c2c3aeac22d2a470c1752
+    volumes:
+      - ./web01/index.html:/usr/share/nginx/html/index.html:ro
+    networks:
+      data:
+        ipv4_address: 172.31.20.31
+
+  web02:
+    image: nginx:alpine@sha256:4a73073bd557c65b759505da037898b61f1be6cbcc3c2c3aeac22d2a470c1752
+    volumes:
+      - ./web02/index.html:/usr/share/nginx/html/index.html:ro
+    networks:
+      data:
+        ipv4_address: 172.31.20.32
+
+networks:
+  management:
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.31.10.0/24
+  data:
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.31.20.0/24

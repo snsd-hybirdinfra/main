@@ -1,10 +1,11 @@
 param(
-    [string]$EvidencePath = (Join-Path $PSScriptRoot 'evidence\2026-09-24.json')
+    [string]$EvidencePath = (Join-Path $PSScriptRoot 'evidence\2026-09-29.json')
 )
 
 $ErrorActionPreference = 'Stop'
 $project = 'news-lab09'
 $compose = Join-Path $PSScriptRoot 'compose.yaml'
+$tempPublicKey = Join-Path ([System.IO.Path]::GetTempPath()) ("$project-" + [guid]::NewGuid().ToString('N') + '.pub')
 
 function Compose {
     & docker compose -p $project -f $compose @args
@@ -12,73 +13,132 @@ function Compose {
 }
 
 function Request-Backend {
-    $timer = [System.Diagnostics.Stopwatch]::StartNew()
-    $body = (Invoke-RestMethod -Uri 'http://127.0.0.1:18080/' -TimeoutSec 5).Trim()
-    $timer.Stop()
-    [ordered]@{ backend = $body; elapsed_ms = [math]::Round($timer.Elapsed.TotalMilliseconds, 2) }
+    $body = & docker compose -p $project -f $compose exec -T client curl -fsS --max-time 3 http://172.31.20.10/
+    if ($LASTEXITCODE -ne 0) { throw 'HTTP request through edge failed' }
+    "$body".Trim()
 }
 
-function Sample([int]$count) {
+function Sample([int]$Count) {
     $items = @()
-    1..$count | ForEach-Object {
+    1..$Count | ForEach-Object {
         $items += Request-Backend
         Start-Sleep -Milliseconds 100
     }
     $items
 }
 
+function Counts($Items) {
+    @($Items | Group-Object | Sort-Object Name | ForEach-Object {
+        [ordered]@{ backend = $_.Name; requests = $_.Count }
+    })
+}
+
 Compose down --volumes --remove-orphans
 try {
+    Compose build
     Compose up -d
+
     $ready = $false
     1..30 | ForEach-Object {
         if (-not $ready) {
-            try { $null = Request-Backend; $ready = $true } catch { Start-Sleep -Seconds 1 }
+            try {
+                $status = (& docker inspect -f '{{.State.Health.Status}}' (& docker compose -p $project -f $compose ps -q edge)).Trim()
+                if ($status -eq 'healthy') { $ready = $true } else { Start-Sleep -Seconds 1 }
+            }
+            catch { Start-Sleep -Seconds 1 }
         }
     }
-    if (-not $ready) { throw 'load balancer did not become ready' }
+    if (-not $ready) { throw 'edge container did not become healthy' }
+
+    Compose exec -T admin sh -lc 'rm -f /tmp/lab_key /tmp/lab_key.pub; ssh-keygen -q -t ed25519 -N "" -f /tmp/lab_key'
+
+    $adminId = (& docker compose -p $project -f $compose ps -q admin).Trim()
+    $edgeId = (& docker compose -p $project -f $compose ps -q edge).Trim()
+    if (-not $adminId -or -not $edgeId) { throw 'container id lookup failed' }
+
+    & docker cp "${adminId}:/tmp/lab_key.pub" $tempPublicKey
+    if ($LASTEXITCODE -ne 0) { throw 'failed to copy test public key from admin' }
+    & docker cp $tempPublicKey "${edgeId}:/home/lab/.ssh/authorized_keys"
+    if ($LASTEXITCODE -ne 0) { throw 'failed to install test public key on edge' }
+    Compose exec -T edge sh -lc 'chown lab:lab /home/lab/.ssh/authorized_keys; chmod 600 /home/lab/.ssh/authorized_keys'
+
+    $managementOutput = & docker compose -p $project -f $compose exec -T admin ssh -i /tmp/lab_key -o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=3 lab@172.31.10.10 'printf management-ssh-ok' 2>$null
+    $managementExit = $LASTEXITCODE
+    $managementText = "$managementOutput".Trim()
+
+    $null = & docker compose -p $project -f $compose exec -T client ssh -o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=3 lab@172.31.20.10 true 2>$null
+    $dataSshExit = $LASTEXITCODE
 
     $normal = @(Sample 8)
     Compose stop web01
     $duringFailure = @(Sample 8)
     Compose start web01
 
-    $recovered = $false
+    $rejoined = $false
     1..30 | ForEach-Object {
-        if (-not $recovered) {
-            $sample = Request-Backend
-            if ($sample.backend -eq 'web01') { $recovered = $true } else { Start-Sleep -Milliseconds 250 }
+        if (-not $rejoined) {
+            if ((Request-Backend) -eq 'web01') { $rejoined = $true }
+            else { Start-Sleep -Milliseconds 250 }
         }
     }
-    if (-not $recovered) { throw 'web01 did not rejoin the pool' }
+    if (-not $rejoined) { throw 'web01 did not rejoin the pool' }
     $afterRecovery = @(Sample 8)
 
-    $normalBackends = @($normal.backend | Sort-Object -Unique)
-    $failureBackends = @($duringFailure.backend | Sort-Object -Unique)
-    $recoveryBackends = @($afterRecovery.backend | Sort-Object -Unique)
-    $passed = ($normalBackends.Count -eq 2) -and
-              ($failureBackends.Count -eq 1) -and ($failureBackends[0] -eq 'web02') -and
-              ($recoveryBackends.Count -eq 2)
+    $normalNames = @($normal | Sort-Object -Unique)
+    $failureNames = @($duringFailure | Sort-Object -Unique)
+    $recoveryNames = @($afterRecovery | Sort-Object -Unique)
+
+    $assertions = [ordered]@{
+        admin_to_management_ssh_allowed = (($managementExit -eq 0) -and ($managementText -eq 'management-ssh-ok'))
+        data_network_to_ssh_denied = ($dataSshExit -ne 0)
+        both_backends_seen_before_failure = ($normalNames.Count -eq 2)
+        only_web02_seen_during_web01_failure = (($failureNames.Count -eq 1) -and ($failureNames[0] -eq 'web02'))
+        both_backends_seen_after_recovery = ($recoveryNames.Count -eq 2)
+    }
+    $passed = -not ($assertions.Values -contains $false)
 
     $result = [ordered]@{
         tested_at = (Get-Date).ToUniversalTime().ToString('o')
-        environment = 'Docker Desktop; nginx:alpine; loopback 127.0.0.1:18080'
-        question = 'Does the service remain reachable when one backend stops, and does the backend rejoin after recovery?'
-        normal = [ordered]@{ samples = $normal; counts = @($normal.backend | Group-Object | ForEach-Object { [ordered]@{ backend=$_.Name; requests=$_.Count } }) }
-        web01_stopped = [ordered]@{ samples = $duringFailure; counts = @($duringFailure.backend | Group-Object | ForEach-Object { [ordered]@{ backend=$_.Name; requests=$_.Count } }) }
-        web01_restarted = [ordered]@{ samples = $afterRecovery; counts = @($afterRecovery.backend | Group-Object | ForEach-Object { [ordered]@{ backend=$_.Name; requests=$_.Count } }) }
-        assertions = [ordered]@{
-            both_backends_seen_before_failure = ($normalBackends.Count -eq 2)
-            only_web02_seen_during_web01_failure = (($failureBackends.Count -eq 1) -and ($failureBackends[0] -eq 'web02'))
-            both_backends_seen_after_recovery = ($recoveryBackends.Count -eq 2)
+        scope = 'local-container-management-data-separation-and-backend-failover'
+        source = [ordered]@{
+            security_bulletin = 'https://support.citrix.com/external/article/CTX697096'
+            security_bulletin_published = '2026-09-27'
+            management_data_separation = 'https://docs.netscaler.com/en-us/citrix-adc/current-release/networking/mgmt-and-data-plane-separation.html'
         }
+        environment = [ordered]@{
+            runtime = 'Docker Desktop'
+            edge_image_id = (& docker inspect -f '{{.Image}}' $edgeId).Trim()
+            management_network = '172.31.10.0/24'
+            data_network = '172.31.20.0/24'
+            management_ssh = '172.31.10.10:22'
+            data_http = '172.31.20.10:80'
+        }
+        access_tests = [ordered]@{
+            admin_to_management_ssh = [ordered]@{ exit_code = $managementExit; output = $managementText }
+            data_client_to_data_ip_ssh = [ordered]@{ exit_code = $dataSshExit; expected = 'non-zero because SSH is not bound to the data-plane address' }
+        }
+        http_tests = [ordered]@{
+            normal = [ordered]@{ samples = $normal; counts = @(Counts $normal) }
+            web01_stopped = [ordered]@{ samples = $duringFailure; counts = @(Counts $duringFailure) }
+            web01_restarted = [ordered]@{ samples = $afterRecovery; counts = @(Counts $afterRecovery) }
+        }
+        assertions = $assertions
         passed = $passed
-        limits = @('Synthetic HTTP responses only', 'Nginx passive retry, not an F5 BIG-IP health monitor', 'No TLS, session persistence, WAF, OAuth, exploit, or performance test')
+        not_validated = @(
+            'Citrix NetScaler ADC or Gateway',
+            'CVE-2026-88771 through CVE-2026-88778',
+            'NetScaler NSIP, SNIP, VIP, ACL, secure management routing tables, or HA pair',
+            'Internet exposure, TLS, WAF, VPN, AAA, exploit, or performance'
+        )
     }
+
+    $directory = Split-Path -Parent $EvidencePath
+    New-Item -ItemType Directory -Force -Path $directory | Out-Null
     $result | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $EvidencePath -Encoding utf8NoBOM
     $result | ConvertTo-Json -Depth 8
     if (-not $passed) { exit 1 }
 }
 finally {
+    if (Test-Path -LiteralPath $tempPublicKey) { Remove-Item -LiteralPath $tempPublicKey -Force }
     Compose down --volumes --remove-orphans
 }
