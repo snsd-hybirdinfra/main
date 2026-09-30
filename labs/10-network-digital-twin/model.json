@@ -1,5 +1,5 @@
 {
-  "model": "synthetic-app-network-v1",
+  "model": "synthetic-app-network-v2",
   "nodes": [
     { "id": "client", "role": "workload", "application": "portal" },
     { "id": "guest", "role": "workload", "application": "guest" },
@@ -8,7 +8,15 @@
     { "id": "spine2", "role": "router" },
     { "id": "leaf2", "role": "switch" },
     { "id": "app", "role": "workload", "application": "portal" },
-    { "id": "admin", "role": "workload", "application": "management" }
+    { "id": "admin", "role": "workload", "application": "management" },
+    { "id": "external-client", "role": "workload", "application": "public-client" },
+    { "id": "private-client", "role": "workload", "application": "direct-connect-client" },
+    { "id": "global-backbone", "role": "network" },
+    { "id": "eu-internet", "role": "network" },
+    { "id": "direct-connect", "role": "network" },
+    { "id": "sovereign-edge", "role": "router" },
+    { "id": "sovereign-service", "role": "workload", "application": "sovereign-service" },
+    { "id": "operational-transfer", "role": "control-service" }
   ],
   "links": [
     ["client", "leaf1"],
@@ -18,7 +26,15 @@
     ["spine1", "leaf2"],
     ["spine2", "leaf2"],
     ["leaf2", "app"],
-    ["leaf2", "admin"]
+    ["leaf2", "admin"],
+    ["external-client", "global-backbone"],
+    ["global-backbone", "sovereign-edge"],
+    ["external-client", "eu-internet"],
+    ["eu-internet", "sovereign-edge"],
+    ["private-client", "direct-connect"],
+    ["direct-connect", "sovereign-service"],
+    ["sovereign-edge", "sovereign-service"],
+    ["operational-transfer", "sovereign-edge"]
   ],
   "denied_flows": [
     { "source": "guest", "destination": "admin", "reason": "guest-to-management segmentation" }
@@ -44,6 +60,22 @@
       "disabled_nodes": ["spine1", "spine2"],
       "checks": [
         { "source": "client", "destination": "app", "expected_reachable": false }
+      ]
+    },
+    {
+      "name": "sovereign-normal",
+      "disabled_nodes": [],
+      "checks": [
+        { "source": "external-client", "destination": "sovereign-service", "expected_reachable": true, "min_paths": 2 },
+        { "source": "private-client", "destination": "sovereign-service", "expected_reachable": true, "min_paths": 1 }
+      ]
+    },
+    {
+      "name": "sovereign-global-systems-isolated",
+      "disabled_nodes": ["global-backbone", "operational-transfer"],
+      "checks": [
+        { "source": "external-client", "destination": "sovereign-service", "expected_reachable": true, "min_paths": 1 },
+        { "source": "private-client", "destination": "sovereign-service", "expected_reachable": true, "min_paths": 1 }
       ]
     }
   ]

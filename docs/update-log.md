@@ -100,6 +100,15 @@
 - EVPN/VXLAN은 VNI 100·200 각각 ping 3/3과 VNI 간 ping 0/2를 경고 없이 확인했다.
 - 기존 2026-09-22 출력은 지우지 않고 새 [BGP/ECMP 증적](../labs/01-bgp-ecmp/evidence/2026-09-29.txt)과 [EVPN/VXLAN 증적](../labs/02-evpn-vxlan/evidence/2026-09-29.txt)을 추가했다.
 
+## 2026-09-30 — 겹치는 랩은 확장하고 Kubernetes RBAC는 실행
+
+- 삼성·SKT·하나금융의 2026-09-28 Private 5G 발표를 확인했다. Network Slicing은 기존 02 EVPN/VXLAN의 논리 세그먼트 질문과 겹쳐 새 랩을 만들지 않고 연결했다. 5G SA Core·USIM·금융망은 검증하지 않았다.
+- AWS의 2026-09-28 Sovereign Cloud 독립 운영 시험 발표를 기존 10 Network Digital Twin에 통합했다. Global Backbone과 운영 전송 노드를 제거한 뒤에도 합성 EU Internet·Direct Connect 경로가 각각 1개 남는 것을 계산했다. AWS가 예고한 2026-10-24 실제 시험 결과를 성공으로 기록하지 않았다.
+- Unit 42의 2026-09-29 Kubernetes Operator 연구는 기존 랩에 없는 Kubernetes 런타임 권한 질문이라 13 Kubernetes RBAC로 추가했다. kind v1.36.4에서 같은 Namespace의 Pod·Deployment 조회 2개는 허용되고 Secret 조회·Pod 삭제·다른 Namespace·ClusterRole 조회 4개는 거부됐다.
+- 첫 실행에서 PowerShell 인수 전달과 `kubectl auth can-i`의 예상 거부 종료 코드·경고 출력을 발견해 스크립트를 고쳤다. 최종 재실행은 6/6 통과했고 임시 클러스터와 kubeconfig를 정리했다.
+- NetScaler 공격 확대 후속 원문은 기존 09 Edge Load Balancer HA 항목에 합쳤다. 같은 주제의 새 랩은 추가하지 않았다.
+- 전체 상태는 로컬 검증 13개·설계 0개다.
+
 ## 이후 갱신 양식
 
 ### YYYY-MM-DD

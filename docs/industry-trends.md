@@ -16,9 +16,9 @@
 
 ## 3. Hybrid·Private·Sovereign Cloud
 
-데이터 위치, 규제, 지연, 비용과 운영 통제가 클라우드 설계에 영향을 줍니다. 개인 프로젝트의 OpenStack/k3s 경계와 연결하되, 실제 퍼블릭 클라우드 연동 전에는 `Hybrid-Ready`로만 표기합니다.
+데이터 위치, 규제, 지연, 비용과 운영 통제가 클라우드 설계에 영향을 줍니다. [AWS European Sovereign Cloud 독립 운영 시험 발표](https://aws.amazon.com/blogs/security/aws-european-sovereign-cloud-demonstrating-an-independent-operation/)(2026-09-28)는 Global Backbone과 제한된 운영 데이터 전송 시스템을 분리한 상태에서 전용 EU Internet과 Direct Connect 경로를 유지하는 시험을 예고했습니다. 개인 프로젝트의 OpenStack/k3s 경계와 연결하되, 실제 퍼블릭 클라우드 연동 전에는 `Hybrid-Ready`로만 표기합니다.
 
-**학습 연결:** Private IaaS, IAM/STS, Terraform, Kubernetes 네트워킹.
+**학습 연결:** Private IaaS, IAM/STS, Terraform, Kubernetes 네트워킹. 10번 디지털 트윈에는 이 의존성을 단순화한 합성 경로를 넣어 Global Backbone 제거 뒤 EU Internet·Direct Connect 경로를 계산했습니다. AWS가 예고한 2026-10-24 실제 시험 결과는 아직 확인 대상입니다.
 
 ## 4. AI Agent Security와 보안 기본기
 
@@ -32,13 +32,13 @@ HA, 백업, 복원, 재구축, RTO/RPO를 분리해 봅니다. 현재 개인 프
 
 ## 6. Kubernetes·자동화·관측
 
-브리핑에서 반복된 운영 흐름은 네트워크 CLI에서 Python/API/Telemetry로, 서버 모니터링에서 Logs·Metrics·Traces를 연결하는 방향입니다. Kubernetes는 Pod뿐 아니라 Service, Ingress/Gateway, NetworkPolicy, RBAC, Storage와 관측까지 함께 학습합니다.
+브리핑에서 반복된 운영 흐름은 네트워크 CLI에서 Python/API/Telemetry로, 서버 모니터링에서 Logs·Metrics·Traces를 연결하는 방향입니다. [Unit 42의 Kubernetes Operator 연구](https://unit42.paloaltonetworks.com/agentic-ai-kubernetes-operator-risks/)(2026-09-29)는 자동화 ServiceAccount의 과도한 RBAC가 침해 범위를 키운다는 문제를 제시했습니다. Kubernetes는 Pod뿐 아니라 Service, Ingress/Gateway, NetworkPolicy, RBAC, Storage와 관측까지 함께 학습합니다.
 
-**실습 연결:** RESTCONF 조회 결과와 CLI 대조, 네트워크 상태 자동 점검, 합성 워크로드 관측.
+**실습 연결:** RESTCONF 조회 결과와 CLI 대조, 네트워크 상태 자동 점검, 합성 워크로드 관측. 13번 랩에서는 Namespace Role로 조회만 허용하고 Secret·삭제·다른 Namespace·ClusterRole 접근을 kind 런타임에서 거부했습니다.
 
 ## 7. 서비스 경계의 가용성과 취약점 우선순위
 
-9월 브리핑의 [F5 BIG-IP APM 권고](https://my.f5.com/manage/s/article/K000162605), [CISA KEV 공지](https://www.cisa.gov/news-events/alerts/2026/09/22/cisa-adds-four-known-exploited-vulnerabilities-catalog), [Citrix NetScaler 보안 공지](https://support.citrix.com/external/article/CTX697096)(2026-09-27)는 로드밸런서·VPN·접근 제어 장비가 트래픽과 인증의 공통 경계임을 보여 줍니다. 패치 우선순위뿐 아니라 관리 Plane 노출과 장애 시 서비스 경로도 함께 봐야 합니다.
+9월 브리핑의 [F5 BIG-IP APM 권고](https://my.f5.com/manage/s/article/K000162605), [CISA KEV 공지](https://www.cisa.gov/news-events/alerts/2026/09/22/cisa-adds-four-known-exploited-vulnerabilities-catalog), [Citrix NetScaler 보안 공지](https://support.citrix.com/external/article/CTX697096)(2026-09-27)와 [Unit 42 위협 브리프](https://unit42.paloaltonetworks.com/netscaler-zero-days-exploited/)(2026-09-28)는 로드밸런서·VPN·접근 제어 장비가 트래픽과 인증의 공통 경계임을 보여 줍니다. 패치 우선순위뿐 아니라 관리 Plane 노출과 장애 시 서비스 경로도 함께 봐야 합니다.
 
 **실습 연결:** 제품과 CVE를 재현하지 않고 Nginx 로드밸런서의 장애·복구를 먼저 측정했습니다. 이어서 관리망과 데이터망을 분리하고 관리 SSH 허용·데이터망 SSH 거부·백엔드 장애 중 HTTP 유지를 컨테이너에서 확인했습니다.
 

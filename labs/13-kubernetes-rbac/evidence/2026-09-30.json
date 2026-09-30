@@ -1,0 +1,101 @@
+{
+  "tested_at": "2026-09-30T05:07:36.1974799Z",
+  "status": "passed",
+  "environment": {
+    "kind": "kind v0.33.0 go1.26.7 windows/amd64",
+    "kubectl_client": "v1.36.1",
+    "kubernetes_server": "v1.36.4",
+    "node_image": "kindest/node:v1.36.4@sha256:099e049362a1526b2db71494e1947aae99bd16290d7c895f2b7ea312e3cbfaed"
+  },
+  "subject": "system:serviceaccount:rbac-lab:operator-reader",
+  "role_scope": "namespace:rbac-lab",
+  "applied_role_rules": [
+    {
+      "apiGroups": [
+        ""
+      ],
+      "resources": [
+        "pods"
+      ],
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ]
+    },
+    {
+      "apiGroups": [
+        "apps"
+      ],
+      "resources": [
+        "deployments"
+      ],
+      "verbs": [
+        "get",
+        "list",
+        "watch"
+      ]
+    }
+  ],
+  "summary": {
+    "total": 6,
+    "passed": 6,
+    "failed": 0
+  },
+  "checks": [
+    {
+      "name": "same-namespace-pod-read",
+      "verb": "get",
+      "resource": "pods",
+      "namespace": "rbac-lab",
+      "expected": "yes",
+      "actual": "yes",
+      "passed": true
+    },
+    {
+      "name": "same-namespace-deployment-list",
+      "verb": "list",
+      "resource": "deployments.apps",
+      "namespace": "rbac-lab",
+      "expected": "yes",
+      "actual": "yes",
+      "passed": true
+    },
+    {
+      "name": "secret-read-denied",
+      "verb": "get",
+      "resource": "secrets",
+      "namespace": "rbac-lab",
+      "expected": "no",
+      "actual": "no",
+      "passed": true
+    },
+    {
+      "name": "pod-delete-denied",
+      "verb": "delete",
+      "resource": "pods",
+      "namespace": "rbac-lab",
+      "expected": "no",
+      "actual": "no",
+      "passed": true
+    },
+    {
+      "name": "other-namespace-list-denied",
+      "verb": "list",
+      "resource": "pods",
+      "namespace": "other-team",
+      "expected": "no",
+      "actual": "no",
+      "passed": true
+    },
+    {
+      "name": "clusterrole-read-denied",
+      "verb": "get",
+      "resource": "clusterroles.rbac.authorization.k8s.io",
+      "namespace": "",
+      "expected": "no",
+      "actual": "no",
+      "passed": true
+    }
+  ]
+}

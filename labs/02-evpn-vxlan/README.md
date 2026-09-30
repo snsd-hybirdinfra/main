@@ -6,6 +6,8 @@
 
 2026-09-22 첫 실행 뒤 2026-09-29에 WSL2의 FRR 컨테이너 두 대로 L2VNI를 다시 확인했다. 2-Spine Underlay와 L3VNI는 이번 실행에 넣지 않았다.
 
+[삼성·SKT·하나금융 Private 5G 발표(2026-09-28)](https://news.samsung.com/global/samsung-sk-telecom-and-hana-financial-group-buildkoreas-first-private-5g-smart-office-in-the-financial-sector/)에서는 하나의 물리 인프라를 계열사별 Network Slice로 나눠 독립 운영 환경과 보안 정책을 적용했다고 설명한다. 5G SA Core와 Network Slicing을 구현한 것은 아니지만, **공유 인프라 위에서 논리 세그먼트가 섞이지 않는가**라는 기존 질문과 겹쳐 새 랩을 만들지 않고 이 실습에 연결했다.
+
 ## 확인하려던 것
 
 같은 물리 Underlay 위에서 두 논리 세그먼트를 운반할 때, 같은 VNI의 원격 Host는 통신하고 서로 다른 VNI의 Host는 같은 IP 대역을 사용해도 L2로 연결되지 않아야 한다.
@@ -53,7 +55,7 @@ Host1에서 Host3으로는 같은 IP 프리픽스의 주소를 ARP로 찾지만,
 ## 남은 점
 
 - 두 Leaf를 직접 연결한 소규모 Underlay이다. 멀티 홉 Spine-Leaf Fabric, Route Reflector, L3VNI, Anycast Gateway, MTU·성능 시험은 아직 하지 않았다.
-- FRR CLI가 `vtysh.conf` 누락 및 초기 설정 처리 경고를 출력했다. 이웃·VNI·FDB·Host 통신은 별도로 확인했다.
+- 2026-09-22 첫 출력에는 `vtysh.conf` 누락 경고가 있었다. 파일과 소유권을 고친 뒤 2026-09-29 재실행에서는 해당 경고 없이 같은 통신·격리 결과를 확인했다.
 - 이 결과는 합성 컨테이너 랩의 로컬 검증이며, 금융 네트워크 또는 실제 데이터센터의 배포 증거가 아닙니다.
 
 ## 참고한 문서

@@ -12,8 +12,8 @@
 
 | 구분 | 수량 | 의미 |
 |---|---:|---|
-| 전체 실습 | 12 | 뉴스에서 도출한 독립 기술 질문 |
-| 로컬 검증 | 12 | 코드·컨테이너·합성 모델에서 직접 실행하고 증적 저장 |
+| 전체 실습 | 13 | 뉴스에서 도출한 독립 기술 질문 |
+| 로컬 검증 | 13 | 코드·컨테이너·합성 모델과 임시 로컬 클러스터에서 직접 실행하고 증적 저장 |
 | 설계 | 0 | 실행 증적 없이 설계만 남은 실습 없음 |
 | 실제 운영 검증 | 0 | 운영·고객 환경 성과를 주장하지 않음 |
 
@@ -27,7 +27,7 @@
 | [02 EVPN/VXLAN](labs/02-evpn-vxlan/README.md) | 로컬 검증 | VNI 100·200 내부 통신과 VNI 간 격리 |
 | [08 AI DC Network](labs/08-ai-dc-network/README.md) | 로컬 검증 | 20 Mbit/s 가상 병목의 처리량과 부하 중 지연 |
 | [09 Edge Load Balancer HA](labs/09-load-balancer-ha/README.md) | 로컬 검증 | 관리망 SSH 허용, 데이터망 SSH 거부, 백엔드 장애 중 HTTP 유지 |
-| [10 Network Digital Twin](labs/10-network-digital-twin/README.md) | 로컬 검증 | 정상 2경로, 단일 장애 1경로, 이중 장애 0경로, 정책 거부 |
+| [10 Network Digital Twin](labs/10-network-digital-twin/README.md) | 로컬 검증 | Fabric 장애·정책 거부와 Global Backbone 분리 후 대체 경로 계산 |
 
 ### Cloud & Automation
 
@@ -45,6 +45,7 @@
 | [06 AAA/RADIUS](labs/06-aaa-radius/README.md) | 로컬 검증 | 승인 1건, 거부 2건 |
 | [07 AI Agent Security](labs/07-ai-agent-security/README.md) | 로컬 검증 | 도구·통신·예산·합성 승인 경계의 허용·거부 |
 | [11 Vulnerability Prioritization](labs/11-vulnerability-prioritization/README.md) | 로컬 검증 | CISA KEV·노출·중요도·관리 Plane·기한을 결합한 합성 자산 우선순위 |
+| [13 Kubernetes RBAC](labs/13-kubernetes-rbac/README.md) | 로컬 검증 | ServiceAccount 읽기 허용 2개와 Secret·삭제·Namespace 밖·ClusterRole 거부 4개 |
 
 ## 문서 구조
 
