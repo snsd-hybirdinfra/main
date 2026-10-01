@@ -1,5 +1,5 @@
 param(
-    [string]$EvidencePath = (Join-Path $PSScriptRoot 'evidence\2026-09-29.json')
+    [string]$EvidencePath = (Join-Path $PSScriptRoot 'evidence\2026-10-01.json')
 )
 
 $ErrorActionPreference = 'Stop'
@@ -101,8 +101,10 @@ try {
         tested_at = (Get-Date).ToUniversalTime().ToString('o')
         scope = 'local-container-management-data-separation-and-backend-failover'
         source = [ordered]@{
-            security_bulletin = 'https://support.citrix.com/external/article/CTX697096'
-            security_bulletin_published = '2026-09-27'
+            citrix_security_bulletin = 'https://support.citrix.com/external/article/CTX697096'
+            citrix_security_bulletin_published = '2026-09-27'
+            cisco_sdwan_advisory = 'https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-webauth-xr8beuuU'
+            cisco_sdwan_advisory_published = '2026-09-30'
             management_data_separation = 'https://docs.netscaler.com/en-us/citrix-adc/current-release/networking/mgmt-and-data-plane-separation.html'
         }
         environment = [ordered]@{
@@ -127,6 +129,8 @@ try {
         not_validated = @(
             'Citrix NetScaler ADC or Gateway',
             'CVE-2026-88771 through CVE-2026-88778',
+            'Cisco Catalyst SD-WAN Manager or CVE-2026-76504',
+            'HTTPS/API authentication bypass, compromise hunting, or fixed software upgrade',
             'NetScaler NSIP, SNIP, VIP, ACL, secure management routing tables, or HA pair',
             'Internet exposure, TLS, WAF, VPN, AAA, exploit, or performance'
         )

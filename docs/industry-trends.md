@@ -1,6 +1,6 @@
 # IT·보안 브리핑에서 추린 기술 흐름
 
-기준: 2026년 9월까지의 「IT·보안 데일리 브리핑」 대화 요약. 이 문서는 당시 브리핑의 **학습 주제 분류**이며, 각 시장 전망이나 기사 수치를 독립적으로 검증한 보고서가 아닙니다. 새 사실을 추가할 때는 원문 출처와 날짜를 확인합니다. 기사별 질문·실습·한계는 [뉴스 → 기술 실습 기록](news-to-labs.md)에 적습니다.
+기준: 2026년 10월 1일까지의 「IT·보안 데일리 브리핑」 대화 요약. 이 문서는 당시 브리핑의 **학습 주제 분류**이며, 각 시장 전망이나 기사 수치를 독립적으로 검증한 보고서가 아닙니다. 새 사실을 추가할 때는 원문 출처와 날짜를 확인합니다. 기사별 질문·실습·한계는 [뉴스 → 기술 실습 기록](news-to-labs.md)에 적습니다.
 
 ## 1. AI 인프라 전체 스택
 
@@ -16,7 +16,7 @@
 
 ## 3. Hybrid·Private·Sovereign Cloud
 
-데이터 위치, 규제, 지연, 비용과 운영 통제가 클라우드 설계에 영향을 줍니다. [AWS European Sovereign Cloud 독립 운영 시험 발표](https://aws.amazon.com/blogs/security/aws-european-sovereign-cloud-demonstrating-an-independent-operation/)(2026-09-28)는 Global Backbone과 제한된 운영 데이터 전송 시스템을 분리한 상태에서 전용 EU Internet과 Direct Connect 경로를 유지하는 시험을 예고했습니다. 개인 프로젝트의 OpenStack/k3s 경계와 연결하되, 실제 퍼블릭 클라우드 연동 전에는 `Hybrid-Ready`로만 표기합니다.
+데이터 위치, 규제, 지연, 비용과 운영 통제가 클라우드 설계에 영향을 줍니다. [AWS European Sovereign Cloud 독립 운영 시험 발표](https://aws.amazon.com/blogs/security/aws-european-sovereign-cloud-demonstrating-an-independent-operation/)(2026-09-28)는 Global Backbone과 제한된 운영 데이터 전송 시스템을 분리한 상태에서 전용 EU Internet과 Direct Connect 경로를 유지하는 시험을 예고했습니다. [OpenStack 2026.2 Hibiscus 공식 릴리스](https://www.openstack.org/software/openstack-hibiscus/)(2026-09-30)는 Private Cloud 기반이 계속 갱신되고 있음을 보여 줍니다. 개인 프로젝트의 OpenStack/k3s 경계와 연결하되, 실제 퍼블릭 클라우드 연동과 Hibiscus 배포 전에는 `Hybrid-Ready`로만 표기합니다.
 
 **학습 연결:** Private IaaS, IAM/STS, Terraform, Kubernetes 네트워킹. 10번 디지털 트윈에는 이 의존성을 단순화한 합성 경로를 넣어 Global Backbone 제거 뒤 EU Internet·Direct Connect 경로를 계산했습니다. AWS가 예고한 2026-10-24 실제 시험 결과는 아직 확인 대상입니다.
 
@@ -38,7 +38,7 @@ HA, 백업, 복원, 재구축, RTO/RPO를 분리해 봅니다. 현재 개인 프
 
 ## 7. 서비스 경계의 가용성과 취약점 우선순위
 
-9월 브리핑의 [F5 BIG-IP APM 권고](https://my.f5.com/manage/s/article/K000162605), [CISA KEV 공지](https://www.cisa.gov/news-events/alerts/2026/09/22/cisa-adds-four-known-exploited-vulnerabilities-catalog), [Citrix NetScaler 보안 공지](https://support.citrix.com/external/article/CTX697096)(2026-09-27)와 [Unit 42 위협 브리프](https://unit42.paloaltonetworks.com/netscaler-zero-days-exploited/)(2026-09-28)는 로드밸런서·VPN·접근 제어 장비가 트래픽과 인증의 공통 경계임을 보여 줍니다. 패치 우선순위뿐 아니라 관리 Plane 노출과 장애 시 서비스 경로도 함께 봐야 합니다.
+9월 브리핑의 [F5 BIG-IP APM 권고](https://my.f5.com/manage/s/article/K000162605), [CISA KEV 공지](https://www.cisa.gov/news-events/alerts/2026/09/22/cisa-adds-four-known-exploited-vulnerabilities-catalog), [Citrix NetScaler 보안 공지](https://support.citrix.com/external/article/CTX697096)(2026-09-27), [Unit 42 위협 브리프](https://unit42.paloaltonetworks.com/netscaler-zero-days-exploited/)(2026-09-28)와 [Cisco Catalyst SD-WAN Manager 권고](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-webauth-xr8beuuU)(2026-09-30)는 로드밸런서·VPN·중앙 관리 장비가 트래픽과 인증의 공통 경계임을 보여 줍니다. 패치 우선순위뿐 아니라 관리 Plane 노출과 장애 시 서비스 경로도 함께 봐야 합니다.
 
 **실습 연결:** 제품과 CVE를 재현하지 않고 Nginx 로드밸런서의 장애·복구를 먼저 측정했습니다. 이어서 관리망과 데이터망을 분리하고 관리 SSH 허용·데이터망 SSH 거부·백엔드 장애 중 HTTP 유지를 컨테이너에서 확인했습니다.
 
@@ -50,9 +50,9 @@ HA, 백업, 복원, 재구축, RTO/RPO를 분리해 봅니다. 현재 개인 프
 
 ## 9. 네트워크 장비의 취약점 수명주기
 
-9월 26일 브리핑에서 다룬 RouterOS·SharePoint 이슈를 [CISA KEV 공식 JSON](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json)으로 확인했습니다. 실제 악용 여부와 조치 기한은 단순 CVSS보다 패치 우선순위를 크게 바꿀 수 있고, 인터넷에 노출된 관리 Plane과 핵심 경계 장비는 자산 맥락까지 함께 봐야 합니다.
+9월 26일 브리핑의 RouterOS·SharePoint 이슈를 [CISA KEV 공식 JSON](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json)으로 확인했습니다. 10월 1일에는 [Cisco CVE-2026-76504 권고](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-webauth-xr8beuuU)와 [Microsoft의 Zimbra CVE-2026-73570 분석](https://www.microsoft.com/en-us/security/blog/2026/09/30/unauthenticated-command-injection-on-internet-facing-mail-servers-tracking-cve-2026-73570/)에서 실제 악용을 확인했습니다. 실제 악용 여부와 조치 기한은 단순 CVSS보다 패치 우선순위를 크게 바꿀 수 있고, 인터넷에 노출된 관리 Plane과 핵심 경계 장비는 자산 맥락까지 함께 봐야 합니다.
 
-**실습 연결:** 공격을 재현하지 않고 공식 KEV 2건과 합성 자산 정보를 결합해 우선순위를 계산했습니다. 실제 버전 식별, 패치, 서비스 검증은 수행하지 않았습니다.
+**실습 연결:** 공격을 재현하지 않고 CISA KEV 2건과 Cisco·Microsoft가 확인한 실제 악용 2건을 합성 자산 맥락과 결합해 우선순위를 계산했습니다. 실제 버전 식별, 패치, 침해 조사와 서비스 검증은 수행하지 않았습니다.
 
 ## 10. Workload Identity와 독립 Guardrail
 

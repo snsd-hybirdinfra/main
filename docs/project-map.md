@@ -36,9 +36,9 @@
 | 06 AAA/RADIUS | 관리망 접근 제어 | 독립 로컬 검증; 금융망 적용 미검증 |
 | 07 AI Agent Security | AI Agent Sandbox의 권한·통신·예산·승인 경계 | 독립 게이트 검증; 서브 프로젝트는 `PARTIALLY_IMPLEMENTED_LOCAL / NOT_VALIDATED` |
 | 08 AI DC Network | 향후 GPU 워크로드의 병목과 관측 | 제한된 가상 링크 검증; GPU/RDMA 미검증 |
-| 09 Edge Load Balancer HA | 포털·서비스 경계의 관리 접근 분리와 가용성 | Nginx·OpenSSH 합성 검증; 플랫폼·실제 경계 장비 통합 미검증 |
+| 09 Edge Load Balancer HA | 포털·서비스 경계의 관리 접근 분리와 가용성 | Nginx·OpenSSH 합성 검증; Cisco SD-WAN Manager 등 실제 경계 장비와 플랫폼 통합은 미검증 |
 | 10 Network Digital Twin | 변경 전 경로·정책과 외부 의존성 제거 시 대체 경로 검증 | Fabric·Sovereign 합성 모델 검증; 실제 장비·AWS 수집 미검증 |
-| 11 Vulnerability Prioritization | 네트워크·플랫폼 자산의 패치 우선순위 | 합성 인벤토리 검증; 실제 CMDB·버전·패치 미검증 |
+| 11 Vulnerability Prioritization | 네트워크·플랫폼 자산의 패치 우선순위 | CISA KEV·공식 실제 악용과 합성 자산 맥락 검증; 실제 CMDB·버전·노출·패치 미검증 |
 | 12 AI Multi-Region Data Path | 향후 GPU Compute와 Dataset 배치 판단 | 로컬 파일 Cache 검증; Public Cloud Adapter가 `DEFERRED`라 실제 AWS·Qumulo·HyperPod 미검증 |
 | 13 Kubernetes RBAC | k3s PaaS의 자동화 ServiceAccount 최소 권한 | 임시 kind 런타임 검증; 서브 프로젝트 k3s 적용·Audit Log는 미검증 |
 

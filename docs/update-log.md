@@ -109,6 +109,13 @@
 - NetScaler 공격 확대 후속 원문은 기존 09 Edge Load Balancer HA 항목에 합쳤다. 같은 주제의 새 랩은 추가하지 않았다.
 - 전체 상태는 로컬 검증 13개·설계 0개다.
 
+## 2026-10-01 — 실제 악용 정보를 기존 랩에 통합
+
+- Cisco의 2026-09-30 Catalyst SD-WAN Manager 권고와 Microsoft의 2026-09-30 Zimbra 공격 분석을 원문으로 확인했다.
+- 같은 주제의 랩을 늘리지 않고 [11 Vulnerability Prioritization](../labs/11-vulnerability-prioritization/README.md)을 확장했다. CISA KEV 2건과 공식 실제 악용 2건을 합성 자산 맥락에 연결해 P0 3건, P1 1건, P2 1건, P3 2건을 계산했고 순서·등급·출처 일치 검사를 모두 통과했다.
+- Cisco의 관리 Plane 노출 문제는 기존 [09 Edge Load Balancer HA](../labs/09-load-balancer-ha/README.md)의 관리·데이터망 분리 질문에 연결했다. 2026-10-01 재실행은 Docker Desktop 서비스가 중지돼 Compose 전 단계에서 멈췄으며 새 증적을 만들지 않았다. 최신 성공 증적은 2026-09-29 실행이다.
+- OpenStack 2026.2 Hibiscus의 2026-09-30 공식 릴리스는 산업 흐름에만 반영했다. Hibiscus 설치·업그레이드나 실제 Private Cloud 런타임은 검증하지 않았다.
+- 랩 수는 로컬 검증 13개·설계 0개로 유지했다.
 ## 이후 갱신 양식
 
 ### YYYY-MM-DD

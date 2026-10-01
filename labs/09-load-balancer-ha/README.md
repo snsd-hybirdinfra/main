@@ -6,6 +6,8 @@
 
 이후 [Citrix NetScaler 보안 공지 CTX697096](https://support.citrix.com/external/article/CTX697096)(2026-09-27)과 [관리·데이터 Plane 분리 문서](https://docs.netscaler.com/en-us/citrix-adc/current-release/networking/mgmt-and-data-plane-separation.html)(2026-09-08)를 확인했다. 새 실습을 하나 더 만들면 기존 장애 전환 실습과 겹치기 때문에, 같은 서비스 경계에서 관리 접근 분리까지 확인하도록 09번 실습을 넓혔다.
 
+[Cisco Catalyst SD-WAN Manager 권고](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-webauth-xr8beuuU)(2026-09-30)도 중앙 관리 Plane의 인터넷 노출과 인증 우회를 다룬다. Cisco는 우회책이 없으므로 고정 버전으로 올리고, 그 전에도 인터넷 같은 비신뢰망에서 Manager 접근을 제한하라고 권고했다. 질문이 기존 관리망 분리와 같아 별도 실습을 만들지 않고 여기에서 다시 확인했다.
+
 제품 취약점을 공격한 실습은 아니다. 뉴스에서 다음 두 질문을 뽑아 로컬 컨테이너로 검증했다.
 
 1. SSH 관리 서비스는 관리망 주소에서만 열리고 데이터망에서는 닫혀 있는가?
@@ -62,7 +64,7 @@ Client ── SSH ──> Edge 172.31.20.10:22  [거부 기대]
 
 - 관리용 SSH가 관리망 주소에서 성공하고 데이터망 주소에서 실패하는 것을 확인했다.
 - Nginx의 passive retry로 단일 백엔드 중단 중 HTTP 응답이 유지되고 복구 후 풀에 다시 들어오는 것을 확인했다.
-- NetScaler 또는 F5 장비, 공지의 CVE, NSIP·SNIP·VIP, 실제 ACL과 HA Pair는 검증하지 않았다.
+- NetScaler·F5·Cisco SD-WAN Manager 장비, 공지의 CVE, NSIP·SNIP·VIP, 실제 ACL과 HA Pair는 검증하지 않았다.
 - 인터넷 노출, TLS 종료, VPN, WAF, AAA, 세션 지속성, 취약점 재현과 부하 성능은 포함하지 않았다.
 
 다음 단계는 실제 가상 장비나 허가된 테스트 계정에서 관리 Route와 ACL을 확인하고, active health check의 장애 감지 시간과 사용자 오류율을 측정하는 것이다.
