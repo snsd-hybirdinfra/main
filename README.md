@@ -27,7 +27,7 @@
 | [02 EVPN/VXLAN](labs/02-evpn-vxlan/README.md) | 로컬 검증 | VNI 100·200 내부 통신과 VNI 간 격리 |
 | [08 AI DC Network](labs/08-ai-dc-network/README.md) | 로컬 검증 | 20 Mbit/s 가상 병목의 처리량과 부하 중 지연 |
 | [09 Edge Load Balancer HA](labs/09-load-balancer-ha/README.md) | 로컬 검증 | 관리망 SSH 허용, 데이터망 SSH 거부, 백엔드 장애 중 HTTP 유지 |
-| [10 Network Digital Twin](labs/10-network-digital-twin/README.md) | 로컬 검증 | Fabric 장애·정책 거부와 Global Backbone 분리 후 대체 경로 계산 |
+| [10 Network Digital Twin](labs/10-network-digital-twin/README.md) | 로컬 검증 | Fabric·Sovereign 경로와 AIDC 통합 Control Plane의 환경별 관측 사각지대 계산 |
 
 ### Cloud & Automation
 

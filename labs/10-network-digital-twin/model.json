@@ -1,5 +1,9 @@
 {
-  "model": "synthetic-app-network-v2",
+  "model": "synthetic-app-network-v3",
+  "sources": [
+    { "title": "KT Cloud AIDC operations platform report", "url": "https://www.bloter.net/news/articleView.html?idxno=674805", "published_at": "2026-10-01" },
+    { "title": "NAVER Cloud AI Factory full-stack report", "url": "https://www.bloter.net/news/articleView.html?idxno=674818", "published_at": "2026-10-01" }
+  ],
   "nodes": [
     { "id": "client", "role": "workload", "application": "portal" },
     { "id": "guest", "role": "workload", "application": "guest" },
@@ -16,7 +20,12 @@
     { "id": "direct-connect", "role": "network" },
     { "id": "sovereign-edge", "role": "router" },
     { "id": "sovereign-service", "role": "workload", "application": "sovereign-service" },
-    { "id": "operational-transfer", "role": "control-service" }
+    { "id": "operational-transfer", "role": "control-service" },
+    { "id": "aidc-operator", "role": "operations", "application": "aidc-operations" },
+    { "id": "unified-control-plane", "role": "control-service", "application": "synthetic-unified-control-plane" },
+    { "id": "public-cloud-api", "role": "control-endpoint", "domain": "public-cloud" },
+    { "id": "private-cloud-api", "role": "control-endpoint", "domain": "private-cloud" },
+    { "id": "onprem-api", "role": "control-endpoint", "domain": "on-premises" }
   ],
   "links": [
     ["client", "leaf1"],
@@ -34,7 +43,11 @@
     ["private-client", "direct-connect"],
     ["direct-connect", "sovereign-service"],
     ["sovereign-edge", "sovereign-service"],
-    ["operational-transfer", "sovereign-edge"]
+    ["operational-transfer", "sovereign-edge"],
+    ["aidc-operator", "unified-control-plane"],
+    ["unified-control-plane", "public-cloud-api"],
+    ["unified-control-plane", "private-cloud-api"],
+    ["unified-control-plane", "onprem-api"]
   ],
   "denied_flows": [
     { "source": "guest", "destination": "admin", "reason": "guest-to-management segmentation" }
@@ -76,6 +89,24 @@
       "checks": [
         { "source": "external-client", "destination": "sovereign-service", "expected_reachable": true, "min_paths": 1 },
         { "source": "private-client", "destination": "sovereign-service", "expected_reachable": true, "min_paths": 1 }
+      ]
+    },
+    {
+      "name": "aidc-control-plane-normal",
+      "disabled_nodes": [],
+      "checks": [
+        { "source": "aidc-operator", "destination": "public-cloud-api", "expected_reachable": true, "min_paths": 1 },
+        { "source": "aidc-operator", "destination": "private-cloud-api", "expected_reachable": true, "min_paths": 1 },
+        { "source": "aidc-operator", "destination": "onprem-api", "expected_reachable": true, "min_paths": 1 }
+      ]
+    },
+    {
+      "name": "aidc-private-cloud-api-unavailable",
+      "disabled_nodes": ["private-cloud-api"],
+      "checks": [
+        { "source": "aidc-operator", "destination": "public-cloud-api", "expected_reachable": true, "min_paths": 1 },
+        { "source": "aidc-operator", "destination": "private-cloud-api", "expected_reachable": false },
+        { "source": "aidc-operator", "destination": "onprem-api", "expected_reachable": true, "min_paths": 1 }
       ]
     }
   ]

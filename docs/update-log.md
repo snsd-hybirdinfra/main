@@ -116,6 +116,13 @@
 - Cisco의 관리 Plane 노출 문제는 기존 [09 Edge Load Balancer HA](../labs/09-load-balancer-ha/README.md)의 관리·데이터망 분리 질문에 연결했다. 첫 재실행은 Docker Desktop 서비스가 중지돼 Compose 전 단계에서 멈췄다. Docker Desktop을 다시 시작한 뒤 재실행해 Admin SSH 허용, 데이터망 SSH 거부, 정상·복구 시 양쪽 백엔드 응답, Web01 중단 중 Web02 8/8을 확인했고 [2026-10-01 증적](../labs/09-load-balancer-ha/evidence/2026-10-01.json)을 저장했다.
 - OpenStack 2026.2 Hibiscus의 2026-09-30 공식 릴리스는 산업 흐름에만 반영했다. Hibiscus 설치·업그레이드나 실제 Private Cloud 런타임은 검증하지 않았다.
 - 랩 수는 로컬 검증 13개·설계 0개로 유지했다.
+## 2026-10-02 — AIDC 운영 플랫폼을 기존 Digital Twin에 통합
+
+- 10월 2일 브리핑에서 KT클라우드의 AIDC 운영 플랫폼과 네이버클라우드의 AI Factory 풀스택 보도를 확인했다. 두 원문은 2026-10-01에 발행됐다.
+- GPU 규모보다 Cloud 운영 소프트웨어, Network·Storage·Security와 Public·Private·On-Prem 통합 Control Plane이 중요하다는 문제를 기존 [10 Network Digital Twin](../labs/10-network-digital-twin/README.md)의 의존성·관측 질문에 연결했다.
+- 합성 Control Plane에서 Public·Private·On-Prem API 경로가 각각 1개 존재함을 확인했다. Private Cloud API를 비활성화한 시나리오에서는 Public·On-Prem 경로는 유지되고 Private 경로만 0개로 판정됐다. 전체 기존·추가 시나리오가 통과했다.
+- 이는 기사 기업의 제품을 실행한 결과가 아니다. GPU Scheduling, 실제 Cloud API, Monitoring, 장애 복구와 서비스 성능은 검증하지 않았다.
+- 새 랩을 만들지 않아 전체 상태는 로컬 검증 13개·설계 0개다.
 ## 이후 갱신 양식
 
 ### YYYY-MM-DD

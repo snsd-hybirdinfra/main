@@ -93,6 +93,7 @@ def main() -> int:
         "tested_at": datetime.now(timezone.utc).isoformat(),
         "model": model["model"],
         "model_sha256": hashlib.sha256(raw).hexdigest(),
+        "sources": model.get("sources", []),
         "status": "passed" if all(item["passed"] for item in results) else "failed",
         "scenarios": results,
     }
